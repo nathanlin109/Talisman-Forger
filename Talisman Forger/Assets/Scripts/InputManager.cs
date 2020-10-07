@@ -57,10 +57,17 @@ public class InputManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                // Can only dot a white tile
-                if (hit.transform.gameObject.GetComponent<Tile>().tileType == TileType.White)
+                // Can only dot/undot a white/symbol tiles
+                switch (hit.transform.gameObject.GetComponent<Tile>().tileType)
                 {
-                    hit.transform.gameObject.GetComponent<Tile>().tileType = TileType.Symbol;
+                    case TileType.White:
+                        hit.transform.gameObject.GetComponent<Tile>().tileType = TileType.Symbol;
+                        break;
+                    case TileType.Symbol:
+                        hit.transform.gameObject.GetComponent<Tile>().tileType = TileType.White;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
