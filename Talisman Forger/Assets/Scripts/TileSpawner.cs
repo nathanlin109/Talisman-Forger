@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeSpawner : MonoBehaviour
+public class TileSpawner : MonoBehaviour
 {
     // Fields
     public GameObject[] tiles;
@@ -18,7 +18,7 @@ public class CubeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // Generates tiles
