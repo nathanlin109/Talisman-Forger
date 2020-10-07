@@ -30,7 +30,7 @@ public class CubeSpawner : MonoBehaviour
             {
                 // Generates tile and adds it to the array
                 tiles[i * 7 + x] = Instantiate(tileNormal,
-                    new Vector3(i - 3, x - 3, -3),
+                    new Vector3(i - 3, x - 3, 0),
                     Quaternion.identity);
             }
         }
