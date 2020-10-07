@@ -35,9 +35,6 @@ public class InputManager : MonoBehaviour
                     // Tells tile to rotate
                     if (hit.transform.gameObject.GetComponent<Tile>().shouldRotate == false)
                     {
-                        // Sets the initial y rotation before telling it to rotate
-                        hit.transform.gameObject.GetComponent<Tile>().initialYRotation =
-                            hit.transform.eulerAngles.y;
                         hit.transform.gameObject.GetComponent<Tile>().shouldRotate = true;
                     }
                 }

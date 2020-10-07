@@ -10,7 +10,6 @@ public class Tile : MonoBehaviour
     public TileType tileType;
     public bool blackGenerated;
     public bool shouldRotate;
-    public float initialYRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +18,6 @@ public class Tile : MonoBehaviour
         tileType = TileType.White;
         blackGenerated = false;
         shouldRotate = false;
-        initialYRotation = 0;
     }
 
     // Update is called once per frame
@@ -36,7 +34,7 @@ public class Tile : MonoBehaviour
     {
         // Gets the target rotation (180 or 0 depending on initial orientation)
         int rotation = 180;
-        if (initialYRotation == 180)
+        if (tileType == TileType.Black)
         {
             rotation = 0;
         }
@@ -47,41 +45,23 @@ public class Tile : MonoBehaviour
                         Time.deltaTime * 5);
 
         // Stops rotating the tile once it's finished (within 1 degree)
-        if (initialYRotation == 0 && 180.0f - transform.eulerAngles.y <= 1)
+        if (tileType == TileType.White && 180.0f - transform.eulerAngles.y <= 1)
         {
+            // Resets tile
             transform.eulerAngles = new Vector3(0, 180, 0);
             shouldRotate = false;
 
-            // Toggles between white/black tile
-            switch(tileType)
-            {
-                case TileType.White:
-                    tileType = TileType.Black;
-                        break;
-                case TileType.Black:
-                    tileType = TileType.White;
-                        break;
-                default:
-                    break;
-            }
+            // Switches it to a black tile
+            tileType = TileType.Black;
         }
-        else if (initialYRotation == 180 && transform.eulerAngles.y <= 1)
+        else if (tileType == TileType.Black && transform.eulerAngles.y <= 1)
         {
+            // Resets tile
             transform.eulerAngles = new Vector3(0, 0, 0);
             shouldRotate = false;
 
-            // Toggles between white/black tile
-            switch (tileType)
-            {
-                case TileType.White:
-                    tileType = TileType.Black;
-                    break;
-                case TileType.Black:
-                    tileType = TileType.White;
-                    break;
-                default:
-                    break;
-            }
+            // Switches it to a white tile
+            tileType = TileType.White;
         }
     }
 }
