@@ -161,7 +161,7 @@ public class TileSpawner : MonoBehaviour
                     // Checks top of horizontal line
                     if (startY - 1 >= 0 &&
                         (finishedPuzzle[startX + i, startY - 1].GetComponent<Tile>().tileType != TileType.Black &&
-                        finishedPuzzle[startX + i, startY - 1].GetComponent<Tile>().tileType != TileType.Black))
+                        finishedPuzzle[startX + i, startY - 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
                     {
                         insertable = false;
                         break;
