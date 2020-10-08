@@ -5,13 +5,13 @@ using UnityEngine;
 public class TileSpawner : MonoBehaviour
 {
     // Fields
-    public GameObject[] tiles;
+    public GameObject[,] tiles;
     public GameObject tileNormal;
 
     // Start is called before the first frame update
     void Start()
     {
-        tiles = new GameObject[49];
+        tiles = new GameObject[7,7];
         GenerateTileGrid();
     }
 
@@ -29,7 +29,7 @@ public class TileSpawner : MonoBehaviour
             for (int x = 0; x < tiles.Length / 7; x++)
             {
                 // Generates tile and adds it to the array
-                tiles[i * 7 + x] = Instantiate(tileNormal,
+                tiles[i, x] = Instantiate(tileNormal,
                     new Vector3(i - 3, x - 3, 0),
                     Quaternion.identity);
             }
