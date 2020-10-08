@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType { White, Black, Symbol, Dot }
+public enum TileType { White, Black, Symbol, Dot, BlackBorder }
 
 public class Tile : MonoBehaviour
 {
