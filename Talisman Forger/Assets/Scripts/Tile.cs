@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour
                         Time.deltaTime * 5);
 
         // Stops rotating the tile once it's finished (within 1 degree)
-        if (tileType == TileType.White && transform.eulerAngles.y <= 1)
+        if ((tileType == TileType.White || tileType == TileType.Dot) && transform.eulerAngles.y <= 1)
         {
             // Resets tile
             transform.eulerAngles = new Vector3(0, 0, 0);
