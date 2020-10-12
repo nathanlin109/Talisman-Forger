@@ -70,7 +70,7 @@ public class TileSpawner : MonoBehaviour
             {
                 // Generates tile and adds it to the array
                 puzzle[i, x] = Instantiate(tile,
-                    new Vector3(i - 3, x - 3, 0),
+                    new Vector3(i - 3, 3 - x, 0),
                     Quaternion.identity);
             }
         }
