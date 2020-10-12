@@ -87,7 +87,7 @@ public class TileSpawner : MonoBehaviour
             {
                 // Generates tile and adds it to the array (array starts out as black)
                 finishedPuzzle[i, x] = Instantiate(tile,
-                    new Vector3(i - 100, x - 3, 0),
+                    new Vector3(i - 100, 3 - x, 0),
                     Quaternion.identity);
                 finishedPuzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
             }
@@ -96,6 +96,10 @@ public class TileSpawner : MonoBehaviour
         // Tries to insert shapes
         for (int y = 0; y < shapes.Length; y++)
         {
+            if (y == 7)
+            {
+                int x = 5;
+            }
             bool didInsert = false;
             for (int i = 0; i < puzzle.Length / 7; i++)
             {
@@ -137,7 +141,7 @@ public class TileSpawner : MonoBehaviour
             if (startX + shape.width <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
                 startY + shape.heightStartY >= 0)
             {
-                // Checks if it can fit horizontally
+                // -----------------------Checks if it can fit horizontally-----------------------
                 for (int i = 0; i < shape.width; i++)
                 {
                     // Checks left of shape
@@ -177,7 +181,45 @@ public class TileSpawner : MonoBehaviour
                     }
                 }
 
-                // Checks if it can fit vertically
+                // ----------------------CHECKS TOP LEFT/RIGHT OF HORIZONTAL ASPECT-------------------------
+                if (startX - 1 >= 0)
+                {
+                    // Checks top of horizontal line
+                    if (startY - 1 >= 0 &&
+                        (finishedPuzzle[startX - 1, startY - 1].GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX - 1, startY - 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+
+                    // Checks bottom of horizontal line
+                    if (startY + 1 <= 6 &&
+                        (finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+                }
+                if (startX + shape.width <= 6)
+                {
+                    // Checks top of horizontal line
+                    if (startY - 1 >= 0 &&
+                        (finishedPuzzle[startX + shape.width, startY - 1].GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.width, startY - 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+
+                    // Checks bottom of horizontal line
+                    if (startY + 1 <= 6 &&
+                        (finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+                }
+
+                // -----------------------Checks if it can fit vertically-----------------------
                 for (int i = 0; i < shape.height; i++)
                 {
                     // Don't looping if can't insert
@@ -233,6 +275,52 @@ public class TileSpawner : MonoBehaviour
                     }
                 }
 
+                // ----------------------CHECKS TOP LEFT/RIGHT OF VERTICAL ASPECT-------------------------
+                if (startY + shape.heightStartY - 1 >= 0)
+                {
+                    // Checks top of vertical line
+                    if (startX + shape.heightStartX - 1 >= 0 &&
+                        (finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY - 1]
+                        .GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY - 1]
+                        .GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+
+                    // Checks bottom of vertical line
+                    if (startX + shape.heightStartX + 1 <= 6 &&
+                        (finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
+                        .GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
+                        .GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+                }
+                if (startY + shape.heightStartY + shape.height <= 6)
+                {
+                    // Checks top of vertical line
+                    if (startX + shape.heightStartX - 1 >= 0 &&
+                        (finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY + shape.height]
+                        .GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY + shape.height]
+                        .GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+
+                    // Checks bottom of vertical line
+                    if (startX + shape.heightStartX + 1 <= 6 &&
+                        (finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
+                        .GetComponent<Tile>().tileType != TileType.Black &&
+                        finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
+                        .GetComponent<Tile>().tileType != TileType.BlackBorder))
+                    {
+                        insertable = false;
+                    }
+                }
+
                 // Inserts the shape
                 if (insertable)
                 {
@@ -261,6 +349,34 @@ public class TileSpawner : MonoBehaviour
                             {
                                 finishedPuzzle[startX + i, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                             }
+                        }
+                    }
+
+                    // ----------------------HORIZONTAL LEFT/RIGHT IS BLACKBORDER-------------------------
+                    if (startX - 1 >= 0)
+                    {
+                        // Left top
+                        if (startY - 1 >= 0)
+                        {
+                            finishedPuzzle[startX - 1, startY - 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                        // Left bottom
+                        if (startY + 1 <= 6)
+                        {
+                            finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                    }
+                    if (startX + shape.width <= 6)
+                    {
+                        // Right top
+                        if (startY - 1 >= 0)
+                        {
+                            finishedPuzzle[startX + shape.width, startY - 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                        // Right bottom
+                        if (startY + 1 <= 6)
+                        {
+                            finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                     }
 
@@ -296,6 +412,44 @@ public class TileSpawner : MonoBehaviour
                             }
                         }
                     }
+                    // ----------------------VERTICAL LEFT/RIGHT IS BLACKBORDER-------------------------
+                    if (startY + shape.heightStartY - 1 >= 0)
+                    {
+                        // Top left
+                        if (startX + shape.heightStartX - 1 >= 0)
+                        {
+                            finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY - 1]
+                                .GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                        // Top right
+                        if (startX + shape.heightStartX + 1 <= 6)
+                        {
+                            finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
+                                .GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                    }
+                    if (startY + shape.heightStartY + shape.height <= 6)
+                    {
+                        // Bottom left
+                        if (startX + shape.heightStartX - 1 >= 0)
+                        {
+                            finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY + shape.height]
+                                .GetComponent<Tile>().tileType = TileType.BlackBorder;
+                            
+                        }
+                        // Bottom right
+                        if (startX + shape.heightStartX + 1 <= 6)
+                        {
+                            finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
+                                .GetComponent<Tile>().tileType = TileType.BlackBorder;
+                        }
+                    }
+
+                    // Sets the starting position of the shape in the array
+                    shape.startingXPos = startX;
+                    shape.startingYPos = startY;
+                    Debug.Log(shape.startingXPos + ", " + shape.startingYPos);
+
                     return true;
                 }
                 return false;
