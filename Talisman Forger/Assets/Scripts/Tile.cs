@@ -29,10 +29,10 @@ public class Tile : MonoBehaviour
     void Rotate()
     {
         // Gets the target rotation (180 or 0 depending on initial orientation)
-        int rotation = 180;
+        int rotation = 0;
         if (tileType == TileType.Black)
         {
-            rotation = 0;
+            rotation = 180;
         }
         
         // Lerps a rotation for the tile
@@ -41,19 +41,19 @@ public class Tile : MonoBehaviour
                         Time.deltaTime * 5);
 
         // Stops rotating the tile once it's finished (within 1 degree)
-        if (tileType == TileType.White && 180.0f - transform.eulerAngles.y <= 1)
+        if (tileType == TileType.White && transform.eulerAngles.y <= 1)
         {
             // Resets tile
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            transform.eulerAngles = new Vector3(0, 0, 0);
             shouldRotate = false;
 
             // Switches it to a black tile
             tileType = TileType.Black;
         }
-        else if (tileType == TileType.Black && transform.eulerAngles.y <= 1)
+        else if (tileType == TileType.Black && 180 - transform.eulerAngles.y <= 1)
         {
             // Resets tile
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            transform.eulerAngles = new Vector3(0, 180, 0);
             shouldRotate = false;
 
             // Switches it to a white tile
