@@ -51,16 +51,18 @@ public class TileSpawner : MonoBehaviour
                 switch (finishedPuzzle[i, x].GetComponent<Tile>().tileType)
                 {
                     case TileType.White:
-                        puzzle[i, x].GetComponent<Renderer>().material = whiteMat;
                         break;
                     case TileType.Black:
-                        puzzle[i, x].GetComponent<Renderer>().material = blackMat;
+                        puzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
+                        puzzle[i, x].transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                         break;
                     case TileType.BlackBorder:
-                        puzzle[i, x].GetComponent<Renderer>().material = blackBorderMat;
+                        puzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
+                        puzzle[i, x].transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                         break;
                     case TileType.Symbol:
-                        puzzle[i, x].GetComponent<Renderer>().material = symbolMat;
+                        puzzle[i, x].GetComponentInChildren<Renderer>().material = symbolMat;
+                        puzzle[i, x].GetComponent<Tile>().tileType = TileType.Symbol;
                         break;
                     default:
                         break;
@@ -85,7 +87,7 @@ public class TileSpawner : MonoBehaviour
                 // Generates tile and adds it to the array
                 puzzle[i, x] = Instantiate(tile,
                     new Vector3(i - 3, 3 - x, 0),
-                    Quaternion.identity);
+                    Quaternion.Euler(0f, 180f, 0f));
             }
         }
     }
@@ -102,7 +104,7 @@ public class TileSpawner : MonoBehaviour
                 // Generates tile and adds it to the array (array starts out as black)
                 finishedPuzzle[i, x] = Instantiate(tile,
                     new Vector3(i - 100, 3 - x, 0),
-                    Quaternion.identity);
+                    Quaternion.Euler(0f, 180f, 0f));
                 finishedPuzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
             }
         }
