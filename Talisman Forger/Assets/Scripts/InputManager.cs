@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    // Fields
+    public Material tileNormalMat;
+    public Material tileDotMat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,13 +59,15 @@ public class InputManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 // Can only dot/undot a white/symbol tiles
-                switch (hit.transform.gameObject.GetComponent<Tile>().tileType)
+                switch (hit.collider.gameObject.GetComponent<Tile>().tileType)
                 {
                     case TileType.White:
-                        hit.transform.gameObject.GetComponent<Tile>().tileType = TileType.Symbol;
+                        hit.collider.gameObject.GetComponent<Tile>().tileType = TileType.Dot;
+                        hit.collider.gameObject.GetComponentInChildren<Renderer>().material = tileDotMat;
                         break;
-                    case TileType.Symbol:
-                        hit.transform.gameObject.GetComponent<Tile>().tileType = TileType.White;
+                    case TileType.Dot:
+                        hit.collider.gameObject.GetComponent<Tile>().tileType = TileType.White;
+                        hit.collider.gameObject.GetComponentInChildren<Renderer>().material = tileNormalMat;
                         break;
                     default:
                         break;

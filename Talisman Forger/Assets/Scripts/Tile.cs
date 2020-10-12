@@ -8,15 +8,11 @@ public class Tile : MonoBehaviour
 {
     // Fields
     public TileType tileType;
-    public bool blackGenerated;
     public bool shouldRotate;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Sets the default tile type to white
-        tileType = TileType.White;
-        blackGenerated = false;
         shouldRotate = false;
     }
 
