@@ -10,10 +10,12 @@ public class TileSpawner : MonoBehaviour
     public GameObject[,] finishedPuzzle;
     public GameObject tile;
     public int inserted;
-    public Shape[] shapes;
+    public Shape[] shapesToInsert;
+    public Shape[] allShapes;
     public Material whiteMat;
     public Material blackMat;
     public Material blackBorderMat;
+    public Material symbolMat;
 
     // Start is called before the first frame update
     void Start()
@@ -22,20 +24,26 @@ public class TileSpawner : MonoBehaviour
         puzzle = new GameObject[7,7];
         finishedPuzzle = new GameObject[7, 7];
 
-        // Creates shapes
-        shapes = new Shape[8];
-        shapes[0] = new Shape(2, 1, 0, 0);
-        shapes[1] = new Shape(3, 2, 2, 0);
-        shapes[2] = new Shape(3, 3, 1, -1);
-        shapes[3] = new Shape(2, 2, 0, 0);
-        shapes[5] = new Shape(2, 2, 0, 0);
-        shapes[6] = new Shape(2, 2, 0, 0);
-        shapes[7] = new Shape(2, 2, 0, 0);
-        shapes[4] = new Shape(1, 1, 0, 0);
+        // Creates all possible shapes to insert into the puzzle
+        allShapes = new Shape[5];
+        allShapes[0] = new Shape(2, 1, 0, 0);
+        allShapes[1] = new Shape(3, 2, 2, 0);
+        allShapes[2] = new Shape(3, 3, 1, -1);
+        allShapes[3] = new Shape(2, 2, 0, 0);
+        allShapes[4] = new Shape(1, 1, 0, 0);
+
+        // Inserts shapes to be placed onto puzzle
+        shapesToInsert = new Shape[20];
+        for (int i = 0; i < shapesToInsert.Length; i++)
+        {
+            shapesToInsert[i] = allShapes[Random.Range(0, 5)];
+        }
 
         // Generates the puzzle and the completed puzzle
         GenerateTileGrid();
-        GeneratePuzzle(shapes);
+        GeneratePuzzle(shapesToInsert);
+
+        // ------------------------TESTING--------------------------
         for (int i = 0; i < puzzle.Length / 7; i++)
         {
             for (int x = 0; x < puzzle.Length / 7; x++)
@@ -50,6 +58,9 @@ public class TileSpawner : MonoBehaviour
                         break;
                     case TileType.BlackBorder:
                         puzzle[i, x].GetComponent<Renderer>().material = blackBorderMat;
+                        break;
+                    case TileType.Symbol:
+                        puzzle[i, x].GetComponent<Renderer>().material = symbolMat;
                         break;
                     default:
                         break;
@@ -444,11 +455,11 @@ public class TileSpawner : MonoBehaviour
                         }
                     }
 
-                    // Sets the starting position of the shape in the array
+                    // Sets the starting position of the shape in the array and inserts symbol in random spot
                     shape.startingXPos = startX;
                     shape.startingYPos = startY;
                     shape.didInsert = true;
-                    Debug.Log(shape.startingXPos + ", " + shape.startingYPos);
+                    shape.InsertSymbol(finishedPuzzle);
 
                     return true;
                 }

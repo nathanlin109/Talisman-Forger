@@ -23,6 +23,7 @@ public class Shape
                + widht: 1, height: 1, heightStartX: 0, heightStartY: 0
      */
 
+    // Ctor
     public Shape(int width, int height, int heightStartX, int heightStartY)
     {
         this.width = width;
@@ -32,5 +33,25 @@ public class Shape
         startingXPos = 0;
         startingYPos = 0;
         didInsert = false;
+    }
+
+    // Inserts the symbol in a random place in shape
+    public void InsertSymbol(GameObject[,] finishedPuzzle)
+    {
+        if (didInsert)
+        {
+            // Gets a random x position to insert symbol
+            int xInsert = Random.Range(startingXPos, startingXPos + width);
+            int yInsert = startingYPos;
+
+            // If the x position is where the vertical part starts, get a random y pos
+            if (xInsert == startingXPos + heightStartX)
+            {
+                yInsert = Random.Range(startingYPos + heightStartY, startingYPos + heightStartY + height);
+            }
+
+            // Changes the tile type to symbol
+            finishedPuzzle[xInsert, yInsert].GetComponent<Tile>().tileType = TileType.Symbol;
+        }
     }
 }
