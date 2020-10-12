@@ -134,7 +134,7 @@ public class TileSpawner : MonoBehaviour
         if (finishedPuzzle[startX, startY].GetComponent<Tile>().tileType == TileType.Black)
         {
             // Ensures shape will fit onto board
-            if (startX + shape.width <= 6 && startY + shape.heightStartY + shape.height <= 6 &&
+            if (startX + shape.width <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
                 startY + shape.heightStartY >= 0)
             {
                 // Checks if it can fit horizontally
