@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997f494b919ef36469f6a2957344748d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 8333484449272075070, guid: cfddc57e04c763044bd0e12e9399a143, type: 3}
+  tile: {fileID: 3700536744047578342, guid: cd1b0ab0817f79b489d79e9fdb41b437, type: 3}
   inserted: 0
   whiteMat: {fileID: 2100000, guid: 7f7be984692417744b9dfa8128d83040, type: 2}
   blackMat: {fileID: 2100000, guid: 9c2e5fc6e289d4e4d9d10d14cd63f11d, type: 2}
