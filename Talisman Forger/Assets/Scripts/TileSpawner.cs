@@ -23,11 +23,14 @@ public class TileSpawner : MonoBehaviour
         finishedPuzzle = new GameObject[7, 7];
 
         // Creates shapes
-        shapes = new Shape[5];
+        shapes = new Shape[8];
         shapes[0] = new Shape(2, 1, 0, 0);
         shapes[1] = new Shape(3, 2, 2, 0);
         shapes[2] = new Shape(3, 3, 1, -1);
         shapes[3] = new Shape(2, 2, 0, 0);
+        shapes[5] = new Shape(2, 2, 0, 0);
+        shapes[6] = new Shape(2, 2, 0, 0);
+        shapes[7] = new Shape(2, 2, 0, 0);
         shapes[4] = new Shape(1, 1, 0, 0);
 
         // Generates the puzzle and the completed puzzle
@@ -96,10 +99,6 @@ public class TileSpawner : MonoBehaviour
         // Tries to insert shapes
         for (int y = 0; y < shapes.Length; y++)
         {
-            if (y == 7)
-            {
-                int x = 5;
-            }
             bool didInsert = false;
             for (int i = 0; i < puzzle.Length / 7; i++)
             {
@@ -138,7 +137,7 @@ public class TileSpawner : MonoBehaviour
         if (finishedPuzzle[startX, startY].GetComponent<Tile>().tileType == TileType.Black)
         {
             // Ensures shape will fit onto board
-            if (startX + shape.width <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
+            if (startX + shape.width - 1 <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
                 startY + shape.heightStartY >= 0)
             {
                 // -----------------------Checks if it can fit horizontally-----------------------
@@ -448,6 +447,7 @@ public class TileSpawner : MonoBehaviour
                     // Sets the starting position of the shape in the array
                     shape.startingXPos = startX;
                     shape.startingYPos = startY;
+                    shape.didInsert = true;
                     Debug.Log(shape.startingXPos + ", " + shape.startingYPos);
 
                     return true;

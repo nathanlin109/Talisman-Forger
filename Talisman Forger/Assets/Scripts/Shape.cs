@@ -11,6 +11,7 @@ public class Shape
     public int heightStartY; // Vertical part of shape ALWAYS goes from top down (always <= 0)
     public int startingXPos;
     public int startingYPos;
+    public bool didInsert;
                
     /*        |  
      *       -+-  width: 3, height: 3, heightStartX: 1, heightStartY: -1
@@ -30,5 +31,6 @@ public class Shape
         this.heightStartY = heightStartY;
         startingXPos = 0;
         startingYPos = 0;
+        didInsert = false;
     }
 }
