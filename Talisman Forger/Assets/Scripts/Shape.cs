@@ -54,18 +54,4 @@ public class Shape
             finishedPuzzle[xInsert, yInsert].GetComponent<Tile>().tileType = TileType.Symbol;
         }
     }
-
-    // Randomly chooses a rotation and flipped version of the shape
-    public void RandomizeOrientation()
-    {
-        // randomize width and height - if it chooses 1, swap width and height, otherwise leave them as is
-        if (Random.Range(0, 2) == 1)
-        {
-            width ^= height;
-            height = width ^ height;
-            width ^= height;
-        }
-
-        // randomly choose height start X and height start Y
-    }
 }
