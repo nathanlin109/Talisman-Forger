@@ -6,12 +6,14 @@ using UnityEngine;
 public class TileSpawner : MonoBehaviour
 {
     // Fields
+    public GameObject sceneManager;
     public GameObject[,] puzzle;
     public GameObject[,] finishedPuzzle;
     public GameObject tile;
     public int inserted;
     public Shape[] shapesToInsert;
     public Shape[] allShapes;
+    public List<Shape> addedShapes;
     public Material whiteMat;
     public Material blackMat;
     public Material blackBorderMat;
@@ -23,25 +25,33 @@ public class TileSpawner : MonoBehaviour
         // Creates 2d arrays for puzzle and finished puzzle
         puzzle = new GameObject[7,7];
         finishedPuzzle = new GameObject[7, 7];
+        addedShapes = new List<Shape>();
 
         // Creates all possible shapes to insert into the puzzle
         allShapes = new Shape[5];
-        allShapes[0] = new Shape(2, 1, 0, 0);
-        allShapes[1] = new Shape(3, 2, 2, 0);
-        allShapes[2] = new Shape(3, 3, 1, -1);
-        allShapes[3] = new Shape(2, 2, 0, 0);
-        allShapes[4] = new Shape(1, 1, 0, 0);
+        allShapes[0] = new Shape(2, 1, 0, 0, ShapeType.HorizontalLine);
+        allShapes[1] = new Shape(3, 2, 2, 0, ShapeType.LongLShape);
+        allShapes[2] = new Shape(3, 3, 1, -1, ShapeType.Cross);
+        allShapes[3] = new Shape(2, 2, 0, 0, ShapeType.SmallLShape);
+        allShapes[4] = new Shape(1, 1, 0, 0, ShapeType.Dot);
 
         // Inserts shapes to be placed onto puzzle
         shapesToInsert = new Shape[20];
         for (int i = 0; i < shapesToInsert.Length; i++)
         {
-            shapesToInsert[i] = allShapes[Random.Range(0, 5)];
+            int index = Random.Range(0, allShapes.Length);
+            shapesToInsert[i] = new Shape(allShapes[index].width, allShapes[index].height,
+                allShapes[index].heightStartX, allShapes[index].heightStartY, allShapes[index].shapeType);
         }
 
         // Generates the puzzle and the completed puzzle
         GenerateTileGrid();
         GeneratePuzzle(shapesToInsert);
+
+        // Sets the puzzle variables in scene manager
+        sceneManager.GetComponent<SceneManager>().addedShapes = addedShapes;
+        sceneManager.GetComponent<SceneManager>().puzzle = puzzle;
+        sceneManager.GetComponent<SceneManager>().finishedPuzzle = finishedPuzzle;
 
         // ------------------------TESTING--------------------------
         for (int i = 0; i < puzzle.Length / 7; i++)
@@ -461,6 +471,7 @@ public class TileSpawner : MonoBehaviour
                     shape.startingXPos = startX;
                     shape.startingYPos = startY;
                     shape.didInsert = true;
+                    addedShapes.Add(shape);
                     shape.InsertSymbol(finishedPuzzle);
 
                     return true;
@@ -469,11 +480,5 @@ public class TileSpawner : MonoBehaviour
             }
         }
         return false;
-    }
-
-    // Checks for double blacks
-    bool checkDoubleBlacks()
-    {
-        return true;
     }
 }

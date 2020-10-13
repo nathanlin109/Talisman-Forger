@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ShapeType {HorizontalLine, LongLShape, Cross , SmallLShape, Dot}
+
 public class Shape
 {
     // Fields (vertical part of shape will go from top down)
@@ -12,6 +14,7 @@ public class Shape
     public int startingXPos;
     public int startingYPos;
     public bool didInsert;
+    public ShapeType shapeType;
                
     /*        |  
      *       -+-  width: 3, height: 3, heightStartX: 1, heightStartY: -1
@@ -24,12 +27,13 @@ public class Shape
      */
 
     // Ctor
-    public Shape(int width, int height, int heightStartX, int heightStartY)
+    public Shape(int width, int height, int heightStartX, int heightStartY, ShapeType shapeType)
     {
         this.width = width;
         this.height = height;
         this.heightStartX = heightStartX;
         this.heightStartY = heightStartY;
+        this.shapeType = shapeType;
         startingXPos = 0;
         startingYPos = 0;
         didInsert = false;
