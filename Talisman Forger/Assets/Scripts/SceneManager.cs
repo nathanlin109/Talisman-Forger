@@ -12,12 +12,10 @@ public class SceneManager : MonoBehaviour
     public GameObject[,] puzzle;
     public GameObject[,] finishedPuzzle;
     public bool didWin;
-    private List<Shape> shapesMovedRight;
 
     // Start is called before the first frame update
     void Start()
     {
-        shapesMovedRight = new List<Shape>();
         didWin = false;
     }
 
@@ -214,7 +212,7 @@ public class SceneManager : MonoBehaviour
                 }
             }
 
-            // Checks the shape one to the right
+            // Checks the shape one to the right and down
             else
             {
                 for (int i = 0; i < shape.width; i++)
@@ -385,17 +383,196 @@ public class SceneManager : MonoBehaviour
                     else
                     {
                         didWin = false;
-                    }
-
-                    if (didWin == false)
-                    {
                         break;
                     }
                 }
 
-                if (didWin)
+                // Checks one down
+                for (int i = 0; i < shape.width; i++)
                 {
-                    shapesMovedRight.Add(shape);
+                    // Don't bother checking one down because checking one right was correct
+                    if (didWin)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        didWin = true;
+                        if (shape.startingYPos + shape.heightStartY + shape.height <= 6)
+                        {
+                            // Checks horizontal to see if it's white, symbol, or dot
+                            if (puzzle[shape.startingXPos + i, shape.startingYPos + 1]
+                                    .GetComponent<Tile>().tileType != TileType.White &&
+                                puzzle[shape.startingXPos + i, shape.startingYPos + 1]
+                                    .GetComponent<Tile>().tileType != TileType.Symbol &&
+                                puzzle[shape.startingXPos + i, shape.startingYPos + 1]
+                                    .GetComponent<Tile>().tileType != TileType.Dot)
+                            {
+                                didWin = false;
+                            }
+
+                            // Checks left and right of shape to make sure it's black
+                            if (i == 0 && shape.startingXPos - 1 >= 0 &&
+                                puzzle[shape.startingXPos - 1, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
+                            {
+                                didWin = false;
+                            }
+                            if (i == shape.width - 1 && shape.startingXPos + shape.width <= 6 &&
+                                puzzle[shape.startingXPos + shape.width, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
+                            {
+                                didWin = false;
+                            }
+
+                            // Checks above vertical and below horizontal line to make sure it's black
+                            if (shape.startingYPos >= 0 &&
+                                i != shape.heightStartX &&
+                                puzzle[shape.startingXPos + i, shape.startingYPos].GetComponent<Tile>().tileType != TileType.Black)
+                            {
+                                didWin = false;
+                            }
+                            if (shape.startingYPos + 2 <= 6 &&
+                                i != shape.heightStartX &&
+                                puzzle[shape.startingXPos + i, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
+                            {
+                                didWin = false;
+                            }
+
+                            // ----------------------CHECKS TOP LEFT/RIGHT OF HORIZONTAL ASPECT-------------------------
+                            if (shape.startingXPos - 1 >= 0)
+                            {
+                                // Checks top of horizontal line
+                                if (shape.startingYPos >= 0 &&
+                                    puzzle[shape.startingXPos - 1, shape.startingYPos].GetComponent<Tile>().tileType != TileType.Black)
+                                {
+                                    didWin = false;
+                                }
+
+                                // Checks bottom of horizontal line
+                                if (shape.startingYPos + 2 <= 6 &&
+                                    puzzle[shape.startingXPos - 1, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
+                                {
+                                    didWin = false;
+                                }
+                            }
+                            if (shape.startingXPos + shape.width <= 6)
+                            {
+                                // Checks top of horizontal line
+                                if (shape.startingYPos >= 0 &&
+                                    puzzle[shape.startingXPos + shape.width, shape.startingYPos].GetComponent<Tile>().tileType != TileType.Black)
+                                {
+                                    didWin = false;
+                                }
+
+                                // Checks bottom of horizontal line
+                                if (shape.startingYPos + 2 <= 6 &&
+                                    puzzle[shape.startingXPos + shape.width, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
+                                {
+                                    didWin = false;
+                                }
+                            }
+
+                            // Checks vertical to see if it's white, symbol, or dot
+                            if (i == shape.heightStartX && didWin)
+                            {
+                                for (int x = 0; x < shape.height; x++)
+                                {
+                                    // Checks shape itself to see if it's white, symbol, or dot
+                                    if (puzzle[shape.startingXPos + i, shape.startingYPos + shape.heightStartY + x + 1]
+                                            .GetComponent<Tile>().tileType != TileType.White &&
+                                        puzzle[shape.startingXPos + i, shape.startingYPos + shape.heightStartY + x + 1]
+                                            .GetComponent<Tile>().tileType != TileType.Symbol &&
+                                        puzzle[shape.startingXPos + i, shape.startingYPos + shape.heightStartY + x + 1]
+                                            .GetComponent<Tile>().tileType != TileType.Dot)
+                                    {
+                                        didWin = false;
+                                    }
+
+                                    // Checks top and bottom of shape to make sure it's black
+                                    if (x == 0 && shape.startingYPos + shape.heightStartY >= 0 &&
+                                        puzzle[shape.startingXPos + shape.heightStartX, shape.startingYPos + shape.heightStartY]
+                                        .GetComponent<Tile>().tileType != TileType.Black)
+                                    {
+                                        didWin = false;
+                                    }
+                                    if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height + 1 <= 6 &&
+                                        puzzle[shape.startingXPos + shape.heightStartX, shape.startingYPos + shape.heightStartY + shape.height + 1]
+                                        .GetComponent<Tile>().tileType != TileType.Black)
+                                    {
+                                        didWin = false;
+                                    }
+
+                                    // Checks left and right of vertical line to make sure it's black
+                                    if (shape.startingXPos + shape.heightStartX - 1 >= 0 &&
+                                        shape.startingYPos != shape.startingYPos + shape.heightStartY + x &&
+                                        puzzle[shape.startingXPos + shape.heightStartX - 1, shape.startingYPos + shape.heightStartY + x + 1]
+                                        .GetComponent<Tile>().tileType != TileType.Black)
+                                    {
+                                        didWin = false;
+                                    }
+                                    if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                        shape.startingYPos != shape.startingYPos + shape.heightStartY + x &&
+                                        puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + x + 1]
+                                        .GetComponent<Tile>().tileType != TileType.Black)
+                                    {
+                                        didWin = false;
+                                    }
+
+                                    // ----------------------CHECKS TOP LEFT/RIGHT OF VERTICAL ASPECT-------------------------
+                                    if (shape.startingYPos + shape.heightStartY >= 0)
+                                    {
+                                        // Checks top of vertical line
+                                        if (shape.startingXPos + shape.heightStartX - 1 >= 0 &&
+                                            puzzle[shape.startingXPos + shape.heightStartX - 1, shape.startingYPos + shape.heightStartY]
+                                            .GetComponent<Tile>().tileType != TileType.Black)
+                                        {
+                                            didWin = false;
+                                        }
+
+                                        // Checks bottom of vertical line
+                                        if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                            puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY]
+                                            .GetComponent<Tile>().tileType != TileType.Black)
+                                        {
+                                            didWin = false;
+                                        }
+                                    }
+                                    if (shape.startingYPos + shape.heightStartY + shape.height + 1 <= 6)
+                                    {
+                                        // Checks top of vertical line
+                                        if (shape.startingXPos + shape.heightStartX - 1 >= 0 &&
+                                            puzzle[shape.startingXPos + shape.heightStartX - 1, shape.startingYPos + shape.heightStartY + shape.height + 1]
+                                            .GetComponent<Tile>().tileType != TileType.Black)
+                                        {
+                                            didWin = false;
+                                        }
+
+                                        // Checks bottom of vertical line
+                                        if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                            puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + shape.height + 1]
+                                            .GetComponent<Tile>().tileType != TileType.Black)
+                                        {
+                                            didWin = false;
+                                        }
+                                    }
+
+                                    if (didWin == false)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (didWin == false)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            didWin = false;
+                            break;
+                        }
+                    }
                 }
             }
 
