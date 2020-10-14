@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997f494b919ef36469f6a2957344748d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneMan: {fileID: 0}
+  sceneMan: {fileID: 1552224924}
   tile: {fileID: 3617177964029863295, guid: b7cf1a9d836d28a429f0dd93ce2bbe08, type: 3}
   inserted: 0
   whiteMat: {fileID: 2100000, guid: 7f7be984692417744b9dfa8128d83040, type: 2}
