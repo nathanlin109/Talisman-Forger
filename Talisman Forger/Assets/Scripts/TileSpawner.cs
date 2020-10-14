@@ -6,7 +6,7 @@ using UnityEngine;
 public class TileSpawner : MonoBehaviour
 {
     // Fields
-    public GameObject sceneManager;
+    public GameObject sceneMan;
     public GameObject[,] puzzle;
     public GameObject[,] finishedPuzzle;
     public GameObject tile;
@@ -49,9 +49,9 @@ public class TileSpawner : MonoBehaviour
         GeneratePuzzle(shapesToInsert);
 
         // Sets the puzzle variables in scene manager
-        sceneManager.GetComponent<SceneManager>().addedShapes = addedShapes;
-        sceneManager.GetComponent<SceneManager>().puzzle = puzzle;
-        sceneManager.GetComponent<SceneManager>().finishedPuzzle = finishedPuzzle;
+        sceneMan.GetComponent<SceneMan>().addedShapes = addedShapes;
+        sceneMan.GetComponent<SceneMan>().puzzle = puzzle;
+        sceneMan.GetComponent<SceneMan>().finishedPuzzle = finishedPuzzle;
 
         // ------------------------TESTING--------------------------
         for (int i = 0; i < puzzle.Length / 7; i++)

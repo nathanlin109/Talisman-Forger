@@ -3,7 +3,9 @@ guid: 6efbf2f2f9736b846824d06a8ecd1721
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tileNormalMat: {fileID: 2100000, guid: 1e258999a0e467644b6125305719711b, type: 2}
+  - tileDotMat: {fileID: 2100000, guid: 13a146bf612ca184eaa618fc4cb477a5, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

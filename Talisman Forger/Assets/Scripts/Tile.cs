@@ -9,12 +9,12 @@ public class Tile : MonoBehaviour
     // Fields
     public TileType tileType;
     public bool shouldRotate;
-    private GameObject sceneManager;
+    private GameObject sceneMan;
 
     // Start is called before the first frame update
     void Start()
     {
-        sceneManager = GameObject.Find("SceneManager");
+        sceneMan = GameObject.Find("SceneMan");
         shouldRotate = false;
     }
 
@@ -53,7 +53,7 @@ public class Tile : MonoBehaviour
             tileType = TileType.Black;
 
             // Checks if user won
-            sceneManager.GetComponent<SceneManager>().CheckWin();
+            sceneMan.GetComponent<SceneMan>().CheckWin();
         }
         else if (tileType == TileType.Black && 180 - transform.eulerAngles.y <= 1)
         {
@@ -65,7 +65,7 @@ public class Tile : MonoBehaviour
             tileType = TileType.White;
 
             // Checks if user won
-            sceneManager.GetComponent<SceneManager>().CheckWin();
+            sceneMan.GetComponent<SceneMan>().CheckWin();
         }
     }
 }

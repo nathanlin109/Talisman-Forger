@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 
 public enum GameState { MainMenu, Game, Pause, Win}
 
-public class SceneManager : MonoBehaviour
+public class SceneMan : MonoBehaviour
 {
     // Fields
     public List<Shape> addedShapes;
