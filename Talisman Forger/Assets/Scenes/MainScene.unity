@@ -241,7 +241,13 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: 7f7be984692417744b9dfa8128d83040, type: 2}
   blackMat: {fileID: 2100000, guid: 9c2e5fc6e289d4e4d9d10d14cd63f11d, type: 2}
   blackBorderMat: {fileID: 2100000, guid: ac49d44eba14c484699c834d83ee8b5a, type: 2}
-  symbolMat: {fileID: 2100000, guid: a1260f1a1dc8dc64e8718d68c8784d07, type: 2}
+  symbolTestMat: {fileID: 0}
+  symbolMats:
+  - {fileID: 2100000, guid: 02f405112a53a844d80ceeede7026fcb, type: 2}
+  - {fileID: 2100000, guid: e653553e9e9866745ad3787c42c75969, type: 2}
+  - {fileID: 2100000, guid: f82abf44efdc02e4aad8c259c91827fd, type: 2}
+  - {fileID: 2100000, guid: 8d11d7a1045cdd04cae8fe3b4346eff1, type: 2}
+  - {fileID: 2100000, guid: 17ad6987a2e25874fa759e41d915764a, type: 2}
 --- !u!4 &906031351
 Transform:
   m_ObjectHideFlags: 0
