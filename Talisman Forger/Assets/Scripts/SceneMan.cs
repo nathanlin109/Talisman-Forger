@@ -387,6 +387,21 @@ public class SceneMan : MonoBehaviour
                     }
                 }
 
+                // Checks the right corners to make sure black tiles aren't cut off
+                /*if (shape.startingXPos + shape.width <= 6)
+                {
+                    // Top right
+                    if (shape.startingXPos + shape.width == 6 && shape.startingXPos + shape.heightStartX + 1 < 6 && shape.heightStartY < 0 && shape.startingYPos + shape.heightStartY == 0)
+                    {
+                        didWin = false;
+                    }
+                    // Bottom right
+                    if (shape.startingXPos + shape.width == 6 && shape.startingXPos + shape.heightStartX + 1 < 6 && shape.startingYPos + shape.heightStartY + shape.height - 1 == 6)
+                    {
+                        didWin = false;
+                    }
+                }*/
+
                 // Checks one down
                 for (int i = 0; i < shape.width; i++)
                 {
@@ -574,6 +589,22 @@ public class SceneMan : MonoBehaviour
                         }
                     }
                 }
+
+                // Checks the bottom corners to make sure black tiles aren't cut off
+                /*if (shape.startingYPos + shape.height <= 6)
+                {
+                    // Top right
+                    // Bottom left
+                    if (shape.startingXPos == 0 && shape.heightStartX > 0 && shape.startingYPos + shape.heightStartY + shape.height == 6)
+                    {
+                        didWin = false;
+                    }
+                    // Bottom right
+                    if (shape.startingXPos + shape.width - 1 == 6 && shape.startingXPos + shape.heightStartX < 6 && shape.startingYPos + shape.heightStartY + shape.height == 6)
+                    {
+                        didWin = false;
+                    }
+                }*/
             }
 
             if (didWin == false)

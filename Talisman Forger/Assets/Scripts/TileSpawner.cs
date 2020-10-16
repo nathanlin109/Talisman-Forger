@@ -143,12 +143,6 @@ public class TileSpawner : MonoBehaviour
                 }
             }
         }
-
-        // Regenerates puzzle if all pieces didn't insert
-        /*if (inserted != shapes.Length)
-        {
-            GeneratePuzzle(shapes);
-        }*/
     }
 
     // Inserts shapes into puzzle
@@ -163,9 +157,36 @@ public class TileSpawner : MonoBehaviour
             if (startX + shape.width - 1 <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
                 startY + shape.heightStartY >= 0)
             {
+                // Checks 4 corners to make sure there aren't black tiles that are cut off
+                // Top left
+                /*if (startX == 0 && shape.heightStartX > 0 && shape.heightStartY < 0 && startY + shape.heightStartY == 0)
+                {
+                    insertable = false;
+                }
+                // Bottom left
+                if (startX == 0 && shape.heightStartX > 0 && startY + shape.heightStartY + shape.height - 1 == 6)
+                {
+                    insertable = false;
+                }
+                // Top right
+                if (startX + shape.width - 1 == 6 && startX + shape.heightStartX < 6 && shape.heightStartY < 0 && startY + shape.heightStartY == 0)
+                {
+                    insertable = false;
+                }
+                // Bottom right
+                if (startX + shape.width - 1 == 6 && startX + shape.heightStartX < 6 && startY + shape.heightStartY + shape.height - 1 == 6)
+                {
+                    insertable = false;
+                }*/
+
                 // -----------------------Checks if it can fit horizontally-----------------------
                 for (int i = 0; i < shape.width; i++)
                 {
+                    if (insertable == false)
+                    {
+                        break;
+                    }
+
                     // Checks left of shape
                     if (i == 0 && startX - 1 >= 0 &&
                         (finishedPuzzle[startX - 1, startY].GetComponent<Tile>().tileType != TileType.Black &&
