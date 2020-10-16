@@ -13,6 +13,8 @@ public class Shape
     public int heightStartY; // Vertical part of shape ALWAYS goes from top down (always <= 0)
     public int startingXPos;
     public int startingYPos;
+    public int xSymbol;
+    public int ySymbol;
     public bool didInsert;
     public ShapeType shapeType;
                
@@ -45,17 +47,17 @@ public class Shape
         if (didInsert)
         {
             // Gets a random x position to insert symbol
-            int xInsert = Random.Range(startingXPos, startingXPos + width);
-            int yInsert = startingYPos;
+            xSymbol = Random.Range(startingXPos, startingXPos + width);
+            ySymbol = startingYPos;
 
             // If the x position is where the vertical part starts, get a random y pos
-            if (xInsert == startingXPos + heightStartX)
+            if (xSymbol == startingXPos + heightStartX)
             {
-                yInsert = Random.Range(startingYPos + heightStartY, startingYPos + heightStartY + height);
+                ySymbol = Random.Range(startingYPos + heightStartY, startingYPos + heightStartY + height);
             }
 
             // Changes the tile type to symbol
-            finishedPuzzle[xInsert, yInsert].GetComponent<Tile>().tileType = TileType.Symbol;
+            finishedPuzzle[xSymbol, ySymbol].GetComponent<Tile>().tileType = TileType.Symbol;
         }
     }
 }

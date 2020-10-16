@@ -17,7 +17,8 @@ public class TileSpawner : MonoBehaviour
     public Material whiteMat;
     public Material blackMat;
     public Material blackBorderMat;
-    public Material symbolMat;
+    public Material symbolTestMat;
+    public List<Material> symbolMats;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class TileSpawner : MonoBehaviour
         sceneMan.GetComponent<SceneMan>().puzzle = puzzle;
         sceneMan.GetComponent<SceneMan>().finishedPuzzle = finishedPuzzle;
 
-        // ------------------------TESTING--------------------------
+        // Sets colors of tiles
         for (int i = 0; i < puzzle.Length / 7; i++)
         {
             for (int x = 0; x < puzzle.Length / 7; x++)
@@ -71,12 +72,34 @@ public class TileSpawner : MonoBehaviour
                         puzzle[i, x].transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                         break;
                     case TileType.Symbol:
-                        puzzle[i, x].GetComponentInChildren<Renderer>().material = symbolMat;
                         puzzle[i, x].GetComponent<Tile>().tileType = TileType.Symbol;
                         break;
                     default:
                         break;
                 }
+            }
+        }
+
+        // Sets symbols for tiles
+        foreach (Shape shape in addedShapes)
+        {
+            switch(shape.shapeType)
+            {
+                case ShapeType.Dot:
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[0];
+                    break;
+                case ShapeType.Cross:
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[1];
+                    break;
+                case ShapeType.HorizontalLine:
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[2];
+                    break;
+                case ShapeType.LongLShape:
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[3];
+                    break;
+                case ShapeType.SmallLShape:
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[4];
+                    break;
             }
         }
     }
