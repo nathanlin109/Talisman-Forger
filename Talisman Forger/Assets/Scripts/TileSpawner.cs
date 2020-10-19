@@ -38,11 +38,16 @@ public class TileSpawner : MonoBehaviour
 
         // Inserts shapes to be placed onto puzzle
         shapesToInsert = new Shape[20];
-        for (int i = 0; i < shapesToInsert.Length; i++)
+        for (int i = 0; i < shapesToInsert.Length / 2; i++)
         {
-            int index = Random.Range(0, allShapes.Length);
+            int index = Random.Range(0, allShapes.Length - 1);
             shapesToInsert[i] = new Shape(allShapes[index].width, allShapes[index].height,
                 allShapes[index].heightStartX, allShapes[index].heightStartY, allShapes[index].shapeType);
+        }
+        for (int i = shapesToInsert.Length / 2; i < shapesToInsert.Length; i++)
+        {
+            shapesToInsert[i] = new Shape(allShapes[4].width, allShapes[4].height,
+                allShapes[4].heightStartX, allShapes[4].heightStartY, allShapes[4].shapeType);
         }
 
         // Generates the puzzle and the completed puzzle
