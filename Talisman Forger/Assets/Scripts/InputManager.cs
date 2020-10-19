@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class InputManager : MonoBehaviour
     {
         FlipTile();
         DotTile();
-        OpenMenu();
     }
 
     // Flips tiles
@@ -75,14 +73,6 @@ public class InputManager : MonoBehaviour
                         break;
                 }
             }
-        }
-    }
-    
-    void OpenMenu()
-    {
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.SceneManagement;
 
 public enum GameState { MainMenu, Game, Pause, Win}
 
@@ -22,7 +23,32 @@ public class SceneMan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        RunMenuScene();
+        RunGameScene();
+    }
+
+    void RunStartScene()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SceneManager.LoadScene("Start", LoadSceneMode.Single);
+        }
+    }
+
+    void RunMenuScene()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        }
+    }
+
+    void RunGameScene()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        }
     }
 
     // Checks for win every time a tile is flipped
