@@ -19,6 +19,7 @@ public class TileSpawner : MonoBehaviour
     public Material blackBorderMat;
     public Material symbolTestMat;
     public List<Material> symbolMats;
+    public int symbolCopies;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +30,13 @@ public class TileSpawner : MonoBehaviour
         addedShapes = new List<Shape>();
 
         // Creates all possible shapes to insert into the puzzle
-        allShapes = new Shape[5];
-        allShapes[0] = new Shape(2, 1, 0, 0, ShapeType.HorizontalLine);
-        allShapes[1] = new Shape(3, 2, 2, 0, ShapeType.LongLShape);
-        allShapes[2] = new Shape(3, 3, 1, -1, ShapeType.Cross);
-        allShapes[3] = new Shape(2, 2, 0, 0, ShapeType.SmallLShape);
-        allShapes[4] = new Shape(1, 1, 0, 0, ShapeType.Dot);
+        allShapes = new Shape[6];
+        allShapes[0] = new Shape(1, 2, 0, 0, ShapeType.Vertical2);
+        allShapes[1] = new Shape(1, 3, 0, 0, ShapeType.Vertical3);
+        allShapes[2] = new Shape(2, 3, 0, -2, ShapeType.LongBL);
+        allShapes[3] = new Shape(3, 3, 1, -1, ShapeType.Cross);
+        allShapes[4] = new Shape(2, 2, 0, 0, ShapeType.ShortTL);
+        allShapes[5] = new Shape(1, 1, 0, 0, ShapeType.Circle);
 
         // Inserts shapes to be placed onto puzzle
         shapesToInsert = new Shape[20];
@@ -44,10 +46,11 @@ public class TileSpawner : MonoBehaviour
             shapesToInsert[i] = new Shape(allShapes[index].width, allShapes[index].height,
                 allShapes[index].heightStartX, allShapes[index].heightStartY, allShapes[index].shapeType);
         }
+        // Fills the list with circles
         for (int i = shapesToInsert.Length / 2; i < shapesToInsert.Length; i++)
         {
-            shapesToInsert[i] = new Shape(allShapes[4].width, allShapes[4].height,
-                allShapes[4].heightStartX, allShapes[4].heightStartY, allShapes[4].shapeType);
+            shapesToInsert[i] = new Shape(allShapes[allShapes.Length - 1].width, allShapes[allShapes.Length - 1].height,
+                allShapes[allShapes.Length - 1].heightStartX, allShapes[allShapes.Length - 1].heightStartY, allShapes[allShapes.Length - 1].shapeType);
         }
 
         // Generates the puzzle and the completed puzzle
@@ -90,22 +93,32 @@ public class TileSpawner : MonoBehaviour
         // Sets symbols for tiles
         foreach (Shape shape in addedShapes)
         {
+            int index = 0;
             switch(shape.shapeType)
             {
-                case ShapeType.Dot:
-                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[0];
+                case ShapeType.Circle:
+                    index = Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     break;
                 case ShapeType.Cross:
-                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[1];
+                    index = symbolCopies + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     break;
-                case ShapeType.HorizontalLine:
-                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[2];
+                case ShapeType.Vertical2:
+                    index = symbolCopies * 2 + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     break;
-                case ShapeType.LongLShape:
-                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[3];
+                case ShapeType.Vertical3:
+                    index = symbolCopies * 3 + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     break;
-                case ShapeType.SmallLShape:
-                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[4];
+                case ShapeType.LongBL:
+                    index = symbolCopies * 4 + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
+                    break;
+                case ShapeType.ShortTL:
+                    index = symbolCopies * 5 + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     break;
             }
         }

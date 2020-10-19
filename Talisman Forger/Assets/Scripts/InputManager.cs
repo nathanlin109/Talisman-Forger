@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
                     if (hit.transform.gameObject.GetComponent<Tile>().shouldRotate == false)
                     {
                         hit.transform.gameObject.GetComponent<Tile>().shouldRotate = true;
+                        FindObjectOfType<AudioMan>().Play("Click_1");
                     }
                 }
             }

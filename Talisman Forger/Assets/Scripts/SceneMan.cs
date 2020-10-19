@@ -667,6 +667,10 @@ public class SceneMan : MonoBehaviour
         }
 
         Debug.Log(didWin);
+        if (didWin)
+        {
+            FindObjectOfType<AudioMan>().Play("Puzzle_win");
+        }
         return didWin;
     }
 }

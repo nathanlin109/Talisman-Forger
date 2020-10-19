@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShapeType {HorizontalLine, LongLShape, Cross , SmallLShape, Dot}
+public enum ShapeType {Vertical2, Vertical3, LongBL, Cross , ShortTL, Circle}
 
 public class Shape
 {
