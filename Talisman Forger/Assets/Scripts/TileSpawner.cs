@@ -62,6 +62,8 @@ public class TileSpawner : MonoBehaviour
                 switch (finishedPuzzle[i, x].GetComponent<Tile>().tileType)
                 {
                     case TileType.White:
+                        puzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
+                        puzzle[i, x].transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                         break;
                     case TileType.Black:
                         puzzle[i, x].GetComponent<Tile>().tileType = TileType.Black;
