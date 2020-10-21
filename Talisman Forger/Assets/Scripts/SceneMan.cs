@@ -25,6 +25,11 @@ public class SceneMan : MonoBehaviour
     {
         RunMenuScene();
         RunGameScene();
+
+        if (didWin)
+        {
+            SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+        }
     }
 
     void RunStartScene()

@@ -43,14 +43,11 @@ public class GameTimer : MonoBehaviour
         // get the current scene
         currentScene = SceneManager.GetActiveScene().name;
 
-        if (timerText != null)
+        // update the timer if the main game scene is active
+        if (timerText != null && currentScene == "MainScene")
         {
-            // update the timer if the main game scene is active
-            if (currentScene == "MainScene")
-            {
-                timePassed += Time.deltaTime;
-                timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
-            }
+            timePassed += Time.deltaTime;
+            timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
         }
     }
 
@@ -67,6 +64,12 @@ public class GameTimer : MonoBehaviour
                 timePassed = 0;
                 timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
             }
+        }
+        // show the final score on the win scene
+        else if (scene.name == "WinScene")
+        {
+            timerText = GameObject.Find("Canvas/FinalTimeText").GetComponent<Text>();
+            timerText.text = "Your time was " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
         }
     }
 }
