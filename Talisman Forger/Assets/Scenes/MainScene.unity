@@ -1286,7 +1286,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1552224927}
         m_TargetAssemblyTypeName: OpenMenu, Assembly-CSharp
-        m_MethodName: RunMenuScene
+        m_MethodName: RunStartScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
