@@ -13,39 +13,56 @@ public class SceneMan : MonoBehaviour
     public GameObject[,] puzzle;
     public GameObject[,] finishedPuzzle;
     public bool didWin;
+    public GameObject UICanvas;
+    public GameObject pauseCanvas;
+    public GameObject instructionsCanvas;
+    public bool paused;
 
     // Start is called before the first frame update
     void Start()
     {
         didWin = false;
+        paused = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RunMenuScene();
-        RunGameScene();
-
         if (didWin)
         {
             SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
         }
     }
 
-    void RunStartScene()
+    public void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SceneManager.LoadScene("Start", LoadSceneMode.Single);
-        }
+        UICanvas.SetActive(false);
+        pauseCanvas.SetActive(true);
+        paused = true;
     }
 
-    void RunMenuScene()
+    public void UnPause()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-        }
+        UICanvas.SetActive(true);
+        pauseCanvas.SetActive(false);
+        paused = false;
+    }
+
+    public void RunStartScene()
+    {
+        SceneManager.LoadScene("Start", LoadSceneMode.Single);
+    }
+
+    public void OpenInstructions()
+    {
+        pauseCanvas.SetActive(false);
+        instructionsCanvas.SetActive(true);
+    }
+
+    public void CloseInstructions()
+    {
+        pauseCanvas.SetActive(true);
+        instructionsCanvas.SetActive(false);
     }
 
     void RunGameScene()

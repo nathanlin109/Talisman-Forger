@@ -33,7 +33,7 @@ public class GameTimer : MonoBehaviour
     {
         timePassed = 0;
         currentScene = SceneManager.GetActiveScene().name;
-        timerText = GameObject.Find("Canvas/TimerText").GetComponent<Text>();
+        timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -56,7 +56,7 @@ public class GameTimer : MonoBehaviour
         // when the main game scene if loaded, find the timer text
         if (scene.name == "MainScene")
         {
-            timerText = GameObject.Find("Canvas/TimerText").GetComponent<Text>();
+            timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
 
             // reset the timer when loading the main game scene except when switching from the pause menu scene to the main game scene
             if (currentScene != "Menu")

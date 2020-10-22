@@ -17,8 +17,11 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FlipTile();
-        DotTile();
+        if (GameObject.Find("SceneMan").GetComponent<SceneMan>().paused == false)
+        {
+            FlipTile();
+            DotTile();
+        }
     }
 
     // Flips tiles

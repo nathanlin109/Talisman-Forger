@@ -20,7 +20,7 @@ public class StartSceneManager : MonoBehaviour
 
     void RunMenuScene()
     {
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        SceneManager.LoadScene("Instructions", LoadSceneMode.Single);
     }
 
     void RunGameScene()
