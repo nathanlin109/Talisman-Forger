@@ -17,12 +17,16 @@ public class SceneMan : MonoBehaviour
     public GameObject pauseCanvas;
     public GameObject instructionsCanvas;
     public bool paused;
+    private bool playedParticles;
+    private float particleTime;
 
     // Start is called before the first frame update
     void Start()
     {
         didWin = false;
         paused = false;
+        playedParticles = false;
+        particleTime = 0;
     }
 
     // Update is called once per frame
@@ -30,7 +34,30 @@ public class SceneMan : MonoBehaviour
     {
         if (didWin)
         {
-            SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+            if (playedParticles == false)
+            {
+                // Plays particles on all white/symbol tiles
+                for (int i = 0; i < puzzle.Length / 7; i++)
+                {
+                    for (int x = 0; x < puzzle.Length / 7; x++)
+                    {
+                        if (puzzle[i, x].GetComponent<Tile>().tileType == TileType.White ||
+                            puzzle[i, x].GetComponent<Tile>().tileType == TileType.Symbol)
+                        {
+                            puzzle[i, x].GetComponentInChildren<ParticleSystem>().Play();
+                        }
+                    }
+                }
+                playedParticles = true;
+            }
+            if (playedParticles)
+            {
+                particleTime += Time.deltaTime;
+                if (particleTime >= puzzle[0, 0].GetComponentInChildren<ParticleSystem>().main.duration + .5f)
+                {
+                    SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+                }
+            }
         }
     }
 

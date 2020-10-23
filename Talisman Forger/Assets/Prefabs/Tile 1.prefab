@@ -109,5 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 0
-  blackGenerated: 0
   shouldRotate: 0
