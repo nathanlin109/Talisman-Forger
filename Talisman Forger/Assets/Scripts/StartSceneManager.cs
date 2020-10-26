@@ -8,6 +8,7 @@ public class StartSceneManager : MonoBehaviour
     public GameObject mainCanvas;
     public GameObject loreCanvas;
     public GameObject creditsCanvas;
+    public LevelInformation levelInformation;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,8 @@ public class StartSceneManager : MonoBehaviour
             GameObject.Find("SceneMan").GetComponent<SceneMan>().WelcomeCanvas.SetActive(false);
             GameObject.Find("SceneMan").GetComponent<SceneMan>().UICanvas.SetActive(true);
             GameObject.Find("SceneMan").GetComponent<SceneMan>().paused = false;
+            levelInformation.SetLevelInfo();
+            levelInformation.SetupTutorial();
         }
         else
         {

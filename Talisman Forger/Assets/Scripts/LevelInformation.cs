@@ -39,6 +39,17 @@ public class LevelInformation : MonoBehaviour
         level = 1;
         currentScene = SceneManager.GetActiveScene().name;
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (currentScene == "MainScene")
+        {
+            timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            levelText.text = "Level: " + level;
+        }
+        else if (currentScene == "Instructions")
+        {
+            timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            levelText.text = "Tutorial";
+        }
     }
 
     // Update is called once per frame
@@ -46,13 +57,28 @@ public class LevelInformation : MonoBehaviour
     {
         // get the current scene
         currentScene = SceneManager.GetActiveScene().name;
-
+        
         // update the timer if the main game scene is active, not paused, and the win has not been set
-        if (timerText != null && UICanvas != null && currentScene == "MainScene" && UICanvas.activeSelf && !sceneMan.didWin)
-        {
+        if (timerText != null && UICanvas != null && (currentScene == "MainScene" || currentScene == "Instructions") && UICanvas.activeInHierarchy && !sceneMan.didWin)
+        {         
             timePassed += Time.deltaTime;
             timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
         }
+    }
+
+    public void SetLevelInfo()
+    {
+        UICanvas = GameObject.Find("UI Canvas");
+        sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
+        timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
+        levelText = GameObject.Find("UI Canvas/LevelText").GetComponent<Text>();
+    }
+
+    public void SetupTutorial()
+    {
+        timePassed = 0;
+        timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+        levelText.text = "Level: " + level;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -60,10 +86,7 @@ public class LevelInformation : MonoBehaviour
         // when the main game scene is loaded, find the objects and reset the timer
         if (scene.name == "MainScene")
         {
-            UICanvas = GameObject.Find("UI Canvas");
-            sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
-            timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
-            levelText = GameObject.Find("UI Canvas/LevelText").GetComponent<Text>();
+            SetLevelInfo();
             timePassed = 0;
             timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
             levelText.text = "Level: " + level;
@@ -73,7 +96,6 @@ public class LevelInformation : MonoBehaviour
         {
             timerText = GameObject.Find("Canvas/FinalTimeText").GetComponent<Text>();
             timerText.text = "You completed level " + level + " with a time of " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
-            level++;
         }
     }
 }

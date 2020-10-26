@@ -2771,6 +2771,7 @@ MonoBehaviour:
   mainCanvas: {fileID: 0}
   loreCanvas: {fileID: 0}
   creditsCanvas: {fileID: 0}
+  levelInformation: {fileID: 2137056826}
 --- !u!4 &1581970204
 Transform:
   m_ObjectHideFlags: 0
@@ -3783,10 +3784,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f792461b9f36c8f4fbd7a5dd7edea8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UICanvas: {fileID: 0}
-  sceneMan: {fileID: 0}
-  timerText: {fileID: 0}
-  levelText: {fileID: 0}
+  UICanvas: {fileID: 957022891}
+  sceneMan: {fileID: 684512270}
+  timerText: {fileID: 1096743803}
+  levelText: {fileID: 1525874774}
   timePassed: 0
   level: 0
 --- !u!4 &2137056827
