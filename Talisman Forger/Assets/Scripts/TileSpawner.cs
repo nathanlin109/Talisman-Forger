@@ -11,6 +11,7 @@ public class TileSpawner : MonoBehaviour
     public GameObject[,] finishedPuzzle;
     public GameObject tile;
     public int inserted;
+    public int puzzleSize;
     public Shape[] shapesToInsert;
     public Shape[] allShapes;
     public List<Shape> addedShapes;
@@ -20,15 +21,25 @@ public class TileSpawner : MonoBehaviour
     public Material symbolTestMat;
     public List<Material> symbolMats;
     public int symbolCopies;
+    public LevelInformation levelInfo;
+    public Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Creates 2d arrays for puzzle and finished puzzle
-        puzzle = new GameObject[7,7];
-        finishedPuzzle = new GameObject[7, 7];
-        addedShapes = new List<Shape>();
+        // set puzzle size
+        levelInfo = GameObject.Find("LevelInformation").GetComponent<LevelInformation>();
+        puzzleSize = 7 + levelInfo.level / 5;   // only change this 7 when changing the initial size of the puzzle grid
 
+        // adjust camera zoom based on puzzle size
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        mainCamera.orthographicSize += (0.7f * (puzzleSize - 7));
+
+        // Creates 2d arrays for puzzle and finished puzzle
+        puzzle = new GameObject[puzzleSize, puzzleSize];
+        finishedPuzzle = new GameObject[puzzleSize, puzzleSize];
+        addedShapes = new List<Shape>();
+        
         // Creates all possible shapes to insert into the puzzle
         allShapes = new Shape[6];
         allShapes[0] = new Shape(1, 2, 0, 0, ShapeType.Vertical2);
@@ -63,9 +74,9 @@ public class TileSpawner : MonoBehaviour
         sceneMan.GetComponent<SceneMan>().finishedPuzzle = finishedPuzzle;
 
         // Sets colors of tiles
-        for (int i = 0; i < puzzle.Length / 7; i++)
+        for (int i = 0; i < puzzle.Length / puzzleSize; i++)
         {
-            for (int x = 0; x < puzzle.Length / 7; x++)
+            for (int x = 0; x < puzzle.Length / puzzleSize; x++)
             {
                 switch (finishedPuzzle[i, x].GetComponent<Tile>().tileType)
                 {
@@ -133,13 +144,13 @@ public class TileSpawner : MonoBehaviour
     // Generates tiles
     void GenerateTileGrid()
     {
-        for (int i = 0; i < puzzle.Length / 7; i++)
+        for (int i = 0; i < puzzle.Length / puzzleSize; i++)
         {
-            for (int x = 0; x < puzzle.Length / 7; x++)
+            for (int x = 0; x < puzzle.Length / puzzleSize; x++)
             {
                 // Generates tile and adds it to the array
                 puzzle[i, x] = Instantiate(tile,
-                    new Vector3(i - 3, 3 - x, 0),
+                    new Vector3(i - 3 - (0.5f * (puzzleSize - 7)), 3 - x + (0.5f * (puzzleSize - 7)), 0),
                     Quaternion.Euler(0f, 180f, 0f));
             }
         }
@@ -150,9 +161,9 @@ public class TileSpawner : MonoBehaviour
     {
         // Resets the finished puzzle to be of all black tiles
         inserted = 0;
-        for (int i = 0; i < puzzle.Length / 7; i++)
+        for (int i = 0; i < puzzle.Length / puzzleSize; i++)
         {
-            for (int x = 0; x < puzzle.Length / 7; x++)
+            for (int x = 0; x < puzzle.Length / puzzleSize; x++)
             {
                 // Generates tile and adds it to the array (array starts out as black)
                 finishedPuzzle[i, x] = Instantiate(tile,
@@ -166,9 +177,9 @@ public class TileSpawner : MonoBehaviour
         for (int y = 0; y < shapes.Length; y++)
         {
             bool didInsert = false;
-            for (int i = 0; i < puzzle.Length / 7; i++)
+            for (int i = 0; i < puzzle.Length / puzzleSize; i++)
             {
-                for (int x = 0; x < puzzle.Length / 7; x++)
+                for (int x = 0; x < puzzle.Length / puzzleSize; x++)
                 {
                     didInsert = InsertShape(i, x, shapes[y]);
 
@@ -197,7 +208,7 @@ public class TileSpawner : MonoBehaviour
         if (finishedPuzzle[startX, startY].GetComponent<Tile>().tileType == TileType.Black)
         {
             // Ensures shape will fit onto board
-            if (startX + shape.width - 1 <= 6 && startY + shape.heightStartY + shape.height - 1 <= 6 &&
+            if (startX + shape.width - 1 <= puzzleSize - 1 && startY + shape.heightStartY + shape.height - 1 <= puzzleSize - 1 &&
                 startY + shape.heightStartY >= 0)
             {
                 // Checks 4 corners to make sure there aren't black tiles that are cut off
@@ -240,7 +251,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks right of shape
-                    if (i == shape.width - 1 && startX + shape.width <= 6 &&
+                    if (i == shape.width - 1 && startX + shape.width <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + shape.width, startY].GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + shape.width, startY].GetComponent<Tile>().tileType != TileType.BlackBorder))
                     {
@@ -258,7 +269,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of horizontal line
-                    if (startY + 1 <= 6 &&
+                    if (startY + 1 <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + i, startY + 1].GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + i, startY + 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
                     {
@@ -279,14 +290,14 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of horizontal line
-                    if (startY + 1 <= 6 &&
+                    if (startY + 1 <= puzzleSize - 1 &&
                         (finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
                     {
                         insertable = false;
                     }
                 }
-                if (startX + shape.width <= 6)
+                if (startX + shape.width <= puzzleSize - 1)
                 {
                     // Checks top of horizontal line
                     if (startY - 1 >= 0 &&
@@ -297,7 +308,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of horizontal line
-                    if (startY + 1 <= 6 &&
+                    if (startY + 1 <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType != TileType.BlackBorder))
                     {
@@ -326,7 +337,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of shape
-                    if (i == shape.height - 1 && startY + shape.heightStartY + shape.height <= 6 &&
+                    if (i == shape.height - 1 && startY + shape.heightStartY + shape.height <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + shape.heightStartX, startY + shape.heightStartY + shape.height]
                         .GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + shape.heightStartX, startY + shape.heightStartY + shape.height]
@@ -349,7 +360,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks right of vertical line
-                    if (startX + shape.heightStartX + 1 <= 6 &&
+                    if (startX + shape.heightStartX + 1 <= puzzleSize - 1 &&
                         startY != startY + shape.heightStartY + i &&
                         (finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + i]
                         .GetComponent<Tile>().tileType != TileType.Black &&
@@ -375,7 +386,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of vertical line
-                    if (startX + shape.heightStartX + 1 <= 6 &&
+                    if (startX + shape.heightStartX + 1 <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
                         .GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
@@ -384,7 +395,7 @@ public class TileSpawner : MonoBehaviour
                         insertable = false;
                     }
                 }
-                if (startY + shape.heightStartY + shape.height <= 6)
+                if (startY + shape.heightStartY + shape.height <= puzzleSize - 1)
                 {
                     // Checks top of vertical line
                     if (startX + shape.heightStartX - 1 >= 0 &&
@@ -397,7 +408,7 @@ public class TileSpawner : MonoBehaviour
                     }
 
                     // Checks bottom of vertical line
-                    if (startX + shape.heightStartX + 1 <= 6 &&
+                    if (startX + shape.heightStartX + 1 <= puzzleSize - 1 &&
                         (finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
                         .GetComponent<Tile>().tileType != TileType.Black &&
                         finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
@@ -421,7 +432,7 @@ public class TileSpawner : MonoBehaviour
                         {
                             finishedPuzzle[startX - 1, startY].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
-                        if (i == shape.width - 1 && startX + shape.width <= 6)
+                        if (i == shape.width - 1 && startX + shape.width <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX + shape.width, startY].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
@@ -431,7 +442,7 @@ public class TileSpawner : MonoBehaviour
                             {
                                 finishedPuzzle[startX + i, startY - 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                             }
-                            if (startY + 1 <= 6)
+                            if (startY + 1 <= puzzleSize - 1)
                             {
                                 finishedPuzzle[startX + i, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                             }
@@ -447,12 +458,12 @@ public class TileSpawner : MonoBehaviour
                             finishedPuzzle[startX - 1, startY - 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                         // Left bottom
-                        if (startY + 1 <= 6)
+                        if (startY + 1 <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX - 1, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                     }
-                    if (startX + shape.width <= 6)
+                    if (startX + shape.width <= puzzleSize - 1)
                     {
                         // Right top
                         if (startY - 1 >= 0)
@@ -460,7 +471,7 @@ public class TileSpawner : MonoBehaviour
                             finishedPuzzle[startX + shape.width, startY - 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                         // Right bottom
-                        if (startY + 1 <= 6)
+                        if (startY + 1 <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX + shape.width, startY + 1].GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
@@ -479,7 +490,7 @@ public class TileSpawner : MonoBehaviour
                             finishedPuzzle[startX + shape.heightStartX, startY + shape.heightStartY - 1]
                             .GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
-                        if (i == shape.height - 1 && startY + shape.heightStartY + shape.height <= 6)
+                        if (i == shape.height - 1 && startY + shape.heightStartY + shape.height <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX + shape.heightStartX, startY + shape.heightStartY + shape.height]
                             .GetComponent<Tile>().tileType = TileType.BlackBorder;
@@ -491,7 +502,7 @@ public class TileSpawner : MonoBehaviour
                                 finishedPuzzle[startX + shape.heightStartX - 1, startY + shape.heightStartY + i]
                                     .GetComponent<Tile>().tileType = TileType.BlackBorder;
                             }
-                            if (startX + shape.heightStartX + 1 <= 6)
+                            if (startX + shape.heightStartX + 1 <= puzzleSize - 1)
                             {
                                 finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + i]
                                 .GetComponent<Tile>().tileType = TileType.BlackBorder;
@@ -508,13 +519,13 @@ public class TileSpawner : MonoBehaviour
                                 .GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                         // Top right
-                        if (startX + shape.heightStartX + 1 <= 6)
+                        if (startX + shape.heightStartX + 1 <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY - 1]
                                 .GetComponent<Tile>().tileType = TileType.BlackBorder;
                         }
                     }
-                    if (startY + shape.heightStartY + shape.height <= 6)
+                    if (startY + shape.heightStartY + shape.height <= puzzleSize - 1)
                     {
                         // Bottom left
                         if (startX + shape.heightStartX - 1 >= 0)
@@ -524,7 +535,7 @@ public class TileSpawner : MonoBehaviour
                             
                         }
                         // Bottom right
-                        if (startX + shape.heightStartX + 1 <= 6)
+                        if (startX + shape.heightStartX + 1 <= puzzleSize - 1)
                         {
                             finishedPuzzle[startX + shape.heightStartX + 1, startY + shape.heightStartY + shape.height]
                                 .GetComponent<Tile>().tileType = TileType.BlackBorder;

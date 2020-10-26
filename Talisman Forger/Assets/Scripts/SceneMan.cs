@@ -19,6 +19,7 @@ public class SceneMan : MonoBehaviour
     public bool paused;
     private bool playedParticles;
     private float particleTime;
+    public int puzzleSize;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class SceneMan : MonoBehaviour
         paused = false;
         playedParticles = false;
         particleTime = 0;
+        puzzleSize = GameObject.Find("TileSpawner").GetComponent<TileSpawner>().puzzleSize;
     }
 
     // Update is called once per frame
@@ -37,9 +39,9 @@ public class SceneMan : MonoBehaviour
             if (playedParticles == false)
             {
                 // Plays particles on all white/symbol tiles
-                for (int i = 0; i < puzzle.Length / 7; i++)
+                for (int i = 0; i < puzzle.Length / puzzleSize; i++)
                 {
-                    for (int x = 0; x < puzzle.Length / 7; x++)
+                    for (int x = 0; x < puzzle.Length / puzzleSize; x++)
                     {
                         if (puzzle[i, x].GetComponent<Tile>().tileType == TileType.White ||
                             puzzle[i, x].GetComponent<Tile>().tileType == TileType.Symbol)
@@ -92,7 +94,7 @@ public class SceneMan : MonoBehaviour
         instructionsCanvas.SetActive(false);
     }
 
-    void RunGameScene()
+    public void RunGameScene()
     {
         SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
     }
@@ -132,7 +134,7 @@ public class SceneMan : MonoBehaviour
                     {
                         didWin = false;
                     }
-                    if (i == shape.width - 1 && shape.startingXPos + shape.width <= 6 &&
+                    if (i == shape.width - 1 && shape.startingXPos + shape.width <= puzzleSize - 1 &&
                         puzzle[shape.startingXPos + shape.width, shape.startingYPos].GetComponent<Tile>().tileType != TileType.Black)
                     {
                         didWin = false;
@@ -145,7 +147,7 @@ public class SceneMan : MonoBehaviour
                     {
                         didWin = false;
                     }
-                    if (shape.startingYPos + 1 <= 6 &&
+                    if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                         i != shape.heightStartX &&
                         puzzle[shape.startingXPos + i, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                     {
@@ -163,13 +165,13 @@ public class SceneMan : MonoBehaviour
                         }
 
                         // Checks bottom of horizontal line
-                        if (shape.startingYPos + 1 <= 6 &&
+                        if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                             puzzle[shape.startingXPos - 1, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                         {
                             didWin = false;
                         }
                     }
-                    if (shape.startingXPos + shape.width <= 6)
+                    if (shape.startingXPos + shape.width <= puzzleSize - 1)
                     {
                         // Checks top of horizontal line
                         if (shape.startingYPos - 1 >= 0 &&
@@ -179,7 +181,7 @@ public class SceneMan : MonoBehaviour
                         }
 
                         // Checks bottom of horizontal line
-                        if (shape.startingYPos + 1 <= 6 &&
+                        if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                             puzzle[shape.startingXPos + shape.width, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                         {
                             didWin = false;
@@ -209,7 +211,7 @@ public class SceneMan : MonoBehaviour
                             {
                                 didWin = false;
                             }
-                            if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height <= 6 &&
+                            if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height <= puzzleSize - 1 &&
                                 puzzle[shape.startingXPos + shape.heightStartX, shape.startingYPos + shape.heightStartY + shape.height]
                                 .GetComponent<Tile>().tileType != TileType.Black)
                             {
@@ -224,7 +226,7 @@ public class SceneMan : MonoBehaviour
                             {
                                 didWin = false;
                             }
-                            if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                            if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                 shape.startingYPos != shape.startingYPos + shape.heightStartY + x &&
                                 puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + x]
                                 .GetComponent<Tile>().tileType != TileType.Black)
@@ -244,14 +246,14 @@ public class SceneMan : MonoBehaviour
                                 }
 
                                 // Checks bottom of vertical line
-                                if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                     puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY - 1]
                                     .GetComponent<Tile>().tileType != TileType.Black)
                                 {
                                     didWin = false;
                                 }
                             }
-                            if (shape.startingYPos + shape.heightStartY + shape.height <= 6)
+                            if (shape.startingYPos + shape.heightStartY + shape.height <= puzzleSize - 1)
                             {
                                 // Checks top of vertical line
                                 if (shape.startingXPos + shape.heightStartX - 1 >= 0 &&
@@ -262,7 +264,7 @@ public class SceneMan : MonoBehaviour
                                 }
 
                                 // Checks bottom of vertical line
-                                if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                     puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + shape.height]
                                     .GetComponent<Tile>().tileType != TileType.Black)
                                 {
@@ -290,7 +292,7 @@ public class SceneMan : MonoBehaviour
                 for (int i = 0; i < shape.width; i++)
                 {
                     // Checks horizontal to see if it's white, symbol, or dot
-                    if (shape.startingXPos + i + 1 <= 6)
+                    if (shape.startingXPos + i + 1 <= puzzleSize - 1)
                     {
                         if (puzzle[shape.startingXPos + i + 1, shape.startingYPos]
                                 .GetComponent<Tile>().tileType != TileType.White &&
@@ -308,7 +310,7 @@ public class SceneMan : MonoBehaviour
                         {
                             didWin = false;
                         }
-                        if (i == shape.width - 1 && shape.startingXPos + shape.width + 1 <= 6 &&
+                        if (i == shape.width - 1 && shape.startingXPos + shape.width + 1 <= puzzleSize - 1 &&
                             puzzle[shape.startingXPos + shape.width + 1, shape.startingYPos].GetComponent<Tile>().tileType != TileType.Black)
                         {
                             didWin = false;
@@ -321,7 +323,7 @@ public class SceneMan : MonoBehaviour
                         {
                             didWin = false;
                         }
-                        if (shape.startingYPos + 1 <= 6 &&
+                        if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                             i != shape.heightStartX &&
                             puzzle[shape.startingXPos + i + 1, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                         {
@@ -339,13 +341,13 @@ public class SceneMan : MonoBehaviour
                             }
 
                             // Checks bottom of horizontal line
-                            if (shape.startingYPos + 1 <= 6 &&
+                            if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                                 puzzle[shape.startingXPos, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                             {
                                 didWin = false;
                             }
                         }
-                        if (shape.startingXPos + shape.width + 1 <= 6)
+                        if (shape.startingXPos + shape.width + 1 <= puzzleSize - 1)
                         {
                             // Checks top of horizontal line
                             if (shape.startingYPos - 1 >= 0 &&
@@ -355,7 +357,7 @@ public class SceneMan : MonoBehaviour
                             }
 
                             // Checks bottom of horizontal line
-                            if (shape.startingYPos + 1 <= 6 &&
+                            if (shape.startingYPos + 1 <= puzzleSize - 1 &&
                                 puzzle[shape.startingXPos + shape.width + 1, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                             {
                                 didWin = false;
@@ -384,7 +386,7 @@ public class SceneMan : MonoBehaviour
                                 {
                                     didWin = false;
                                 }
-                                if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height <= 6 &&
+                                if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height <= puzzleSize - 1 &&
                                     puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + shape.height]
                                     .GetComponent<Tile>().tileType != TileType.Black)
                                 {
@@ -399,7 +401,7 @@ public class SceneMan : MonoBehaviour
                                 {
                                     didWin = false;
                                 }
-                                if (shape.startingXPos + shape.heightStartX + 2 <= 6 &&
+                                if (shape.startingXPos + shape.heightStartX + 2 <= puzzleSize - 1 &&
                                     shape.startingYPos != shape.startingYPos + shape.heightStartY + x &&
                                     puzzle[shape.startingXPos + shape.heightStartX + 2, shape.startingYPos + shape.heightStartY + x]
                                     .GetComponent<Tile>().tileType != TileType.Black)
@@ -419,14 +421,14 @@ public class SceneMan : MonoBehaviour
                                     }
 
                                     // Checks bottom of vertical line
-                                    if (shape.startingXPos + shape.heightStartX + 2 <= 6 &&
+                                    if (shape.startingXPos + shape.heightStartX + 2 <= puzzleSize - 1 &&
                                         puzzle[shape.startingXPos + shape.heightStartX + 2, shape.startingYPos + shape.heightStartY - 1]
                                         .GetComponent<Tile>().tileType != TileType.Black)
                                     {
                                         didWin = false;
                                     }
                                 }
-                                if (shape.startingYPos + shape.heightStartY + shape.height <= 6)
+                                if (shape.startingYPos + shape.heightStartY + shape.height <= puzzleSize - 1)
                                 {
                                     // Checks top of vertical line
                                     if (shape.startingXPos + shape.heightStartX >= 0 &&
@@ -437,7 +439,7 @@ public class SceneMan : MonoBehaviour
                                     }
 
                                     // Checks bottom of vertical line
-                                    if (shape.startingXPos + shape.heightStartX + 2 <= 6 &&
+                                    if (shape.startingXPos + shape.heightStartX + 2 <= puzzleSize - 1 &&
                                         puzzle[shape.startingXPos + shape.heightStartX + 2, shape.startingYPos + shape.heightStartY + shape.height]
                                         .GetComponent<Tile>().tileType != TileType.Black)
                                     {
@@ -485,7 +487,7 @@ public class SceneMan : MonoBehaviour
                     else
                     {
                         didWin = true;
-                        if (shape.startingYPos + shape.heightStartY + shape.height <= 6)
+                        if (shape.startingYPos + shape.heightStartY + shape.height <= puzzleSize - 1)
                         {
                             // Checks horizontal to see if it's white, symbol, or dot
                             if (puzzle[shape.startingXPos + i, shape.startingYPos + 1]
@@ -504,7 +506,7 @@ public class SceneMan : MonoBehaviour
                             {
                                 didWin = false;
                             }
-                            if (i == shape.width - 1 && shape.startingXPos + shape.width <= 6 &&
+                            if (i == shape.width - 1 && shape.startingXPos + shape.width <= puzzleSize - 1 &&
                                 puzzle[shape.startingXPos + shape.width, shape.startingYPos + 1].GetComponent<Tile>().tileType != TileType.Black)
                             {
                                 didWin = false;
@@ -517,7 +519,7 @@ public class SceneMan : MonoBehaviour
                             {
                                 didWin = false;
                             }
-                            if (shape.startingYPos + 2 <= 6 &&
+                            if (shape.startingYPos + 2 <= puzzleSize - 1 &&
                                 i != shape.heightStartX &&
                                 puzzle[shape.startingXPos + i, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
                             {
@@ -535,13 +537,13 @@ public class SceneMan : MonoBehaviour
                                 }
 
                                 // Checks bottom of horizontal line
-                                if (shape.startingYPos + 2 <= 6 &&
+                                if (shape.startingYPos + 2 <= puzzleSize - 1 &&
                                     puzzle[shape.startingXPos - 1, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
                                 {
                                     didWin = false;
                                 }
                             }
-                            if (shape.startingXPos + shape.width <= 6)
+                            if (shape.startingXPos + shape.width <= puzzleSize - 1)
                             {
                                 // Checks top of horizontal line
                                 if (shape.startingYPos >= 0 &&
@@ -551,7 +553,7 @@ public class SceneMan : MonoBehaviour
                                 }
 
                                 // Checks bottom of horizontal line
-                                if (shape.startingYPos + 2 <= 6 &&
+                                if (shape.startingYPos + 2 <= puzzleSize - 1 &&
                                     puzzle[shape.startingXPos + shape.width, shape.startingYPos + 2].GetComponent<Tile>().tileType != TileType.Black)
                                 {
                                     didWin = false;
@@ -581,7 +583,7 @@ public class SceneMan : MonoBehaviour
                                     {
                                         didWin = false;
                                     }
-                                    if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height + 1 <= 6 &&
+                                    if (x == shape.height - 1 && shape.startingYPos + shape.heightStartY + shape.height + 1 <= puzzleSize - 1 &&
                                         puzzle[shape.startingXPos + shape.heightStartX, shape.startingYPos + shape.heightStartY + shape.height + 1]
                                         .GetComponent<Tile>().tileType != TileType.Black)
                                     {
@@ -596,7 +598,7 @@ public class SceneMan : MonoBehaviour
                                     {
                                         didWin = false;
                                     }
-                                    if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                    if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                         shape.startingYPos != shape.startingYPos + shape.heightStartY + x &&
                                         puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + x + 1]
                                         .GetComponent<Tile>().tileType != TileType.Black)
@@ -616,14 +618,14 @@ public class SceneMan : MonoBehaviour
                                         }
 
                                         // Checks bottom of vertical line
-                                        if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                        if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                             puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY]
                                             .GetComponent<Tile>().tileType != TileType.Black)
                                         {
                                             didWin = false;
                                         }
                                     }
-                                    if (shape.startingYPos + shape.heightStartY + shape.height + 1 <= 6)
+                                    if (shape.startingYPos + shape.heightStartY + shape.height + 1 <= puzzleSize - 1)
                                     {
                                         // Checks top of vertical line
                                         if (shape.startingXPos + shape.heightStartX - 1 >= 0 &&
@@ -634,7 +636,7 @@ public class SceneMan : MonoBehaviour
                                         }
 
                                         // Checks bottom of vertical line
-                                        if (shape.startingXPos + shape.heightStartX + 1 <= 6 &&
+                                        if (shape.startingXPos + shape.heightStartX + 1 <= puzzleSize - 1 &&
                                             puzzle[shape.startingXPos + shape.heightStartX + 1, shape.startingYPos + shape.heightStartY + shape.height + 1]
                                             .GetComponent<Tile>().tileType != TileType.Black)
                                         {
@@ -690,9 +692,9 @@ public class SceneMan : MonoBehaviour
         {
             int finishedPuzzleBlackCount = 0;
             int puzzleBlackCount = 0;
-            for (int i = 0; i < puzzle.Length / 7; i++)
+            for (int i = 0; i < puzzle.Length / puzzleSize; i++)
             {
-                for (int x = 0; x < puzzle.Length / 7; x++)
+                for (int x = 0; x < puzzle.Length / puzzleSize; x++)
                 {
                     if (puzzle[i, x].GetComponent<Tile>().tileType == TileType.Black)
                     {
