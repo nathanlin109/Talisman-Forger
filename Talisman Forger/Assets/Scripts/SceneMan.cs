@@ -94,10 +94,7 @@ public class SceneMan : MonoBehaviour
 
     void RunGameScene()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
-        }
+        SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
     }
 
     // Checks for win every time a tile is flipped
