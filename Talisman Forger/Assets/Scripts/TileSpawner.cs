@@ -36,11 +36,16 @@ public class TileSpawner : MonoBehaviour
     {
         // set puzzle size
         levelInfo = GameObject.Find("LevelInformation").GetComponent<LevelInformation>();
-        puzzleSize = 15 + levelInfo.level / 5;   // only change this 7 when changing the initial size of the puzzle grid
+        puzzleSize = 7 + levelInfo.level / 5;   // only change this 7 when changing the initial size of the puzzle grid
+
+        if (puzzleSize > 15)
+        {
+            puzzleSize = 15;
+        }
 
         // adjust camera zoom based on puzzle size
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        mainCamera.orthographicSize += (0.7f * (puzzleSize - 7));
+        mainCamera.orthographicSize += (0.5f * (puzzleSize - 7));
 
         // Creates 2d arrays for puzzle and finished puzzle
         puzzle = new GameObject[puzzleSize, puzzleSize];
@@ -48,21 +53,25 @@ public class TileSpawner : MonoBehaviour
         addedShapes = new List<Shape>();
 
         // Creates all possible shapes to insert into the puzzle
-        allShapes = new Shape[6];
+        allShapes = new Shape[18];
         allShapes[0] = new Shape(ShapeType.Vertical2);
         allShapes[1] = new Shape(ShapeType.Vertical3);
-        allShapes[1] = new Shape(ShapeType.Horizontal2);
-        allShapes[1] = new Shape(ShapeType.Horizontal3);
-        allShapes[2] = new Shape(ShapeType.LongBL);
-        allShapes[2] = new Shape(ShapeType.LongTL);
-        allShapes[2] = new Shape(ShapeType.LongTR);
-        allShapes[2] = new Shape(ShapeType.LongBR);
-        allShapes[3] = new Shape(ShapeType.Cross);
-        allShapes[4] = new Shape(ShapeType.ShortTL);
-        allShapes[4] = new Shape(ShapeType.ShortTR);
-        allShapes[4] = new Shape(ShapeType.ShortBR);
-        allShapes[4] = new Shape(ShapeType.ShortBL);
-        allShapes[5] = new Shape(ShapeType.Circle);
+        allShapes[2] = new Shape(ShapeType.Horizontal2);
+        allShapes[3] = new Shape(ShapeType.Horizontal3);
+        allShapes[4] = new Shape(ShapeType.LongBL);
+        allShapes[5] = new Shape(ShapeType.LongTL);
+        allShapes[6] = new Shape(ShapeType.LongTR);
+        allShapes[7] = new Shape(ShapeType.LongBR);
+        allShapes[8] = new Shape(ShapeType.Cross);
+        allShapes[9] = new Shape(ShapeType.ShortTL);
+        allShapes[10] = new Shape(ShapeType.ShortTR);
+        allShapes[11] = new Shape(ShapeType.ShortBR);
+        allShapes[12] = new Shape(ShapeType.ShortBL);
+        allShapes[13] = new Shape(ShapeType.TRight);
+        allShapes[14] = new Shape(ShapeType.TDown);
+        allShapes[15] = new Shape(ShapeType.TLeft);
+        allShapes[16] = new Shape(ShapeType.TUp);
+        allShapes[17] = new Shape(ShapeType.Circle);
 
         // Inserts shapes to be placed onto puzzle
         shapesToInsert = new Shape[puzzleSize * 3];
@@ -77,7 +86,7 @@ public class TileSpawner : MonoBehaviour
             // Fills the list with circles
             for (int i = shapesToInsert.Length / 2; i < shapesToInsert.Length; i++)
             {
-                shapesToInsert[i] = new Shape(allShapes[allShapes.Length - 1].shapeType);
+                shapesToInsert[i] = new Shape(ShapeType.Circle);
             }
         }
         // Tutorial
@@ -85,29 +94,29 @@ public class TileSpawner : MonoBehaviour
         {
             if (tutorialLevel == 1)
             {
-                shapesToInsert[0] = new Shape(allShapes[0].shapeType);
-                shapesToInsert[1] = new Shape(allShapes[1].shapeType);
-                shapesToInsert[2] = new Shape(allShapes[2].shapeType);
-                shapesToInsert[3] = new Shape(allShapes[3].shapeType);
-                shapesToInsert[4] = new Shape(allShapes[4].shapeType);
-                shapesToInsert[5] = new Shape(allShapes[5].shapeType);
-                shapesToInsert[6] = new Shape(allShapes[2].shapeType);
+                shapesToInsert[0] = new Shape(ShapeType.Vertical2);
+                shapesToInsert[1] = new Shape(ShapeType.Vertical3);
+                shapesToInsert[2] = new Shape(ShapeType.LongBL);
+                shapesToInsert[3] = new Shape(ShapeType.Cross);
+                shapesToInsert[4] = new Shape(ShapeType.ShortTL);
+                shapesToInsert[5] = new Shape(ShapeType.Circle);
+                shapesToInsert[6] = new Shape(ShapeType.LongBL);
             }
             else if (tutorialLevel == 2)
             {
-                shapesToInsert[5] = new Shape(allShapes[0].shapeType);
-                shapesToInsert[2] = new Shape(allShapes[1].shapeType);
-                shapesToInsert[6] = new Shape(allShapes[2].shapeType);
-                shapesToInsert[4] = new Shape(allShapes[3].shapeType);
-                shapesToInsert[1] = new Shape(allShapes[4].shapeType);
-                shapesToInsert[0] = new Shape(allShapes[5].shapeType);
-                shapesToInsert[3] = new Shape(allShapes[2].shapeType);
+                shapesToInsert[5] = new Shape(ShapeType.Vertical2);
+                shapesToInsert[2] = new Shape(ShapeType.Vertical3);
+                shapesToInsert[6] = new Shape(ShapeType.LongBL);
+                shapesToInsert[4] = new Shape(ShapeType.Cross);
+                shapesToInsert[1] = new Shape(ShapeType.ShortTL);
+                shapesToInsert[0] = new Shape(ShapeType.Circle);
+                shapesToInsert[3] = new Shape(ShapeType.LongBL);
             }
 
             // Fills the list with circles
             for (int i = 7; i < shapesToInsert.Length; i++)
             {
-                shapesToInsert[i] = new Shape(allShapes[allShapes.Length - 1].shapeType);
+                shapesToInsert[i] = new Shape(ShapeType.Circle);
             }
         }
 
@@ -223,6 +232,25 @@ public class TileSpawner : MonoBehaviour
                     break;
                 case ShapeType.ShortBL:
                     index = symbolCopies * 5 + Random.Range(0, symbolCopies);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
+                    puzzle[shape.xSymbol, shape.ySymbol].transform.rotation = Quaternion.Euler(0.0f, 180.0f, 270.0f);
+                    break;
+                case ShapeType.TRight:
+                    index = symbolCopies * 6 + Random.Range(0, symbolCopies - 1);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
+                    break;
+                case ShapeType.TDown:
+                    index = symbolCopies * 6 + Random.Range(0, symbolCopies - 1);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
+                    puzzle[shape.xSymbol, shape.ySymbol].transform.rotation = Quaternion.Euler(0.0f, 180.0f, 90.0f);
+                    break;
+                case ShapeType.TLeft:
+                    index = symbolCopies * 6 + Random.Range(0, symbolCopies - 1);
+                    puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
+                    puzzle[shape.xSymbol, shape.ySymbol].transform.rotation = Quaternion.Euler(0.0f, 180.0f, 180.0f);
+                    break;
+                case ShapeType.TUp:
+                    index = symbolCopies * 6 + Random.Range(0, symbolCopies - 1);
                     puzzle[shape.xSymbol, shape.ySymbol].GetComponentInChildren<Renderer>().material = symbolMats[index];
                     puzzle[shape.xSymbol, shape.ySymbol].transform.rotation = Quaternion.Euler(0.0f, 180.0f, 270.0f);
                     break;

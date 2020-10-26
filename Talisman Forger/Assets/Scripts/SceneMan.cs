@@ -126,6 +126,7 @@ public class SceneMan : MonoBehaviour
 
     public void Pause()
     {
+        PlayClickSound();
         UICanvas.SetActive(false);
         pauseCanvas.SetActive(true);
         paused = true;
@@ -133,6 +134,7 @@ public class SceneMan : MonoBehaviour
 
     public void UnPause()
     {
+        PlayClickSound();
         UICanvas.SetActive(true);
         pauseCanvas.SetActive(false);
         paused = false;
@@ -140,24 +142,33 @@ public class SceneMan : MonoBehaviour
 
     public void RunStartScene()
     {
+        PlayClickSound();
         SceneManager.LoadScene("Start", LoadSceneMode.Single);
     }
 
     public void OpenInstructions()
     {
+        PlayClickSound();
         pauseCanvas.SetActive(false);
         instructionsCanvas.SetActive(true);
     }
 
     public void CloseInstructions()
     {
+        PlayClickSound();
         pauseCanvas.SetActive(true);
         instructionsCanvas.SetActive(false);
     }
 
     public void RunGameScene()
     {
+        PlayClickSound();
         SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+    }
+
+    private void PlayClickSound()
+    {
+        FindObjectOfType<AudioMan>().Play("Click_2");
     }
 
     // Checks for win every time a tile is flipped

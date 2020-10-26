@@ -6,6 +6,7 @@ public enum ShapeType {Vertical2, Vertical3, Horizontal2, Horizontal3,
     LongBL, LongTL, LongTR, LongBR,
     Cross ,
     ShortTL, ShortTR, ShortBR, ShortBL,
+    TRight, TDown, TLeft, TUp,
     Circle}
 
 public class Shape
@@ -121,6 +122,30 @@ public class Shape
                 this.width = 2;
                 this.height = 2;
                 this.heightStartX = 0;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.TRight:
+                this.width = 2;
+                this.height = 3;
+                this.heightStartX = 0;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.TDown:
+                this.width = 3;
+                this.height = 2;
+                this.heightStartX = 1;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.TLeft:
+                this.width = 2;
+                this.height = 3;
+                this.heightStartX = 1;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.TUp:
+                this.width = 3;
+                this.height = 2;
+                this.heightStartX = 1;
                 this.heightStartY = -1;
                 break;
         }

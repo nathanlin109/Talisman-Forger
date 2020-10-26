@@ -1855,8 +1855,8 @@ RectTransform:
   m_Father: {fileID: 1679191990}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.75}
-  m_AnchorMax: {x: 0.5, y: 0.75}
+  m_AnchorMin: {x: 0.5, y: 0.7}
+  m_AnchorMax: {x: 0.5, y: 0.7}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 750, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2768,6 +2768,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efb2569ab0084cbab66b0611e098a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCanvas: {fileID: 0}
+  loreCanvas: {fileID: 0}
+  creditsCanvas: {fileID: 0}
 --- !u!4 &1581970204
 Transform:
   m_ObjectHideFlags: 0
