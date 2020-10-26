@@ -5,13 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameTimer : MonoBehaviour
+public class LevelInformation : MonoBehaviour
 {
-    public static GameTimer instance;
+    public static LevelInformation instance;
     public GameObject UICanvas;
     public SceneMan sceneMan;
     public Text timerText;
+    public Text levelText;
     public float timePassed;
+    public int level;
     private string currentScene;
 
     void Awake()
@@ -34,10 +36,13 @@ public class GameTimer : MonoBehaviour
     void Start()
     {
         timePassed = 0;
+        level = 1;
         currentScene = SceneManager.GetActiveScene().name;
         UICanvas = GameObject.Find("UI Canvas");
         sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
         timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
+        levelText = GameObject.Find("UI Canvas/LevelText").GetComponent<Text>();
+        levelText.text = "Level: " + level;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -63,14 +68,17 @@ public class GameTimer : MonoBehaviour
             UICanvas = GameObject.Find("UI Canvas");
             sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
             timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
+            levelText = GameObject.Find("UI Canvas/LevelText").GetComponent<Text>();
             timePassed = 0;
             timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            levelText.text = "Level: " + level;
         }
         // show the final score on the win scene
         else if (scene.name == "WinScene")
         {
             timerText = GameObject.Find("Canvas/FinalTimeText").GetComponent<Text>();
-            timerText.text = "Your time was " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            timerText.text = "You completed level " + level + " with a time of " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            level++;
         }
     }
 }

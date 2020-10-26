@@ -501,7 +501,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 60}
-  m_SizeDelta: {x: 296.94934, y: 37.659546}
+  m_SizeDelta: {x: 650, y: 37.659546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127822091
 MonoBehaviour:
@@ -536,7 +536,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Your time was 00:00
+  m_Text: You completed level 1 with a time of 00:00
 --- !u!222 &1127822092
 CanvasRenderer:
   m_ObjectHideFlags: 0
