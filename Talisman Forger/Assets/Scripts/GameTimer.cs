@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class GameTimer : MonoBehaviour
 {
     public static GameTimer instance;
+    public GameObject UICanvas;
+    public SceneMan sceneMan;
     public Text timerText;
     public float timePassed;
     private string currentScene;
@@ -33,6 +35,8 @@ public class GameTimer : MonoBehaviour
     {
         timePassed = 0;
         currentScene = SceneManager.GetActiveScene().name;
+        UICanvas = GameObject.Find("UI Canvas");
+        sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
         timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -43,8 +47,8 @@ public class GameTimer : MonoBehaviour
         // get the current scene
         currentScene = SceneManager.GetActiveScene().name;
 
-        // update the timer if the main game scene is active
-        if (timerText != null && currentScene == "MainScene")
+        // update the timer if the main game scene is active, not paused, and the win has not been set
+        if (timerText != null && UICanvas != null && currentScene == "MainScene" && UICanvas.activeSelf && !sceneMan.didWin)
         {
             timePassed += Time.deltaTime;
             timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
@@ -53,17 +57,14 @@ public class GameTimer : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // when the main game scene if loaded, find the timer text
+        // when the main game scene is loaded, find the objects and reset the timer
         if (scene.name == "MainScene")
         {
+            UICanvas = GameObject.Find("UI Canvas");
+            sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
             timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
-
-            // reset the timer when loading the main game scene except when switching from the pause menu scene to the main game scene
-            if (currentScene != "Menu")
-            {
-                timePassed = 0;
-                timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
-            }
+            timePassed = 0;
+            timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
         }
         // show the final score on the win scene
         else if (scene.name == "WinScene")
