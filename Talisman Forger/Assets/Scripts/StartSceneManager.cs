@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -18,13 +16,41 @@ public class StartSceneManager : MonoBehaviour
         
     }
 
-    void RunMenuScene()
+    public void RunGameScene()
+    {
+        SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+    }
+
+    public void RunInstructionsScene()
     {
         SceneManager.LoadScene("Instructions", LoadSceneMode.Single);
     }
 
-    void RunGameScene()
+    public void QuitGame()
     {
-        SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        Application.Quit();
+    }
+
+    public void RunTutorialMessage()
+    {
+        GameObject.Find("SceneMan").GetComponent<SceneMan>().tileSpawner.SetActive(true);
+        GameObject.Find("SceneMan").GetComponent<SceneMan>().StartingInstructionsCanvas.SetActive(false);
+        GameObject.Find("SceneMan").GetComponent<SceneMan>().WelcomeCanvas.SetActive(true);
+        GameObject.Find("SceneMan").GetComponent<SceneMan>().BackgroundCanvas.SetActive(true);
+    }
+
+    public void RunTutorial()
+    {
+        if (GameObject.Find("SceneMan").GetComponent<SceneMan>().tileSpawner.GetComponent<TileSpawner>().
+            tutorialLevel < 3)
+        {
+            GameObject.Find("SceneMan").GetComponent<SceneMan>().WelcomeCanvas.SetActive(false);
+            GameObject.Find("SceneMan").GetComponent<SceneMan>().UICanvas.SetActive(true);
+            GameObject.Find("SceneMan").GetComponent<SceneMan>().paused = false;
+        }
+        else
+        {
+            SceneManager.LoadScene("Start", LoadSceneMode.Single);
+        }
     }
 }

@@ -38,11 +38,6 @@ public class LevelInformation : MonoBehaviour
         timePassed = 0;
         level = 1;
         currentScene = SceneManager.GetActiveScene().name;
-        UICanvas = GameObject.Find("UI Canvas");
-        sceneMan = GameObject.Find("SceneMan").GetComponent<SceneMan>();
-        timerText = GameObject.Find("UI Canvas/TimerText").GetComponent<Text>();
-        levelText = GameObject.Find("UI Canvas/LevelText").GetComponent<Text>();
-        levelText.text = "Level: " + level;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 

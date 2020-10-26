@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShapeType {Vertical2, Vertical3, LongBL, Cross , ShortTL, Circle}
+public enum ShapeType {Vertical2, Vertical3, Horizontal2, Horizontal3,
+    LongBL, LongTL, LongTR, LongBR,
+    Cross ,
+    ShortTL, ShortTR, ShortBR, ShortBL,
+    Circle}
 
 public class Shape
 {
@@ -29,31 +33,123 @@ public class Shape
      */
 
     // Ctor
-    public Shape(int width, int height, int heightStartX, int heightStartY, ShapeType shapeType)
+    public Shape(ShapeType shapeType)
     {
-        this.width = width;
-        this.height = height;
-        this.heightStartX = heightStartX;
-        this.heightStartY = heightStartY;
         this.shapeType = shapeType;
+
+        switch(shapeType)
+        {
+            case ShapeType.Circle:
+                this.width = 1;
+                this.height = 1;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.Cross:
+                this.width = 3;
+                this.height = 3;
+                this.heightStartX = 1;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.Vertical2:
+                this.width = 1;
+                this.height = 2;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.Vertical3:
+                this.width = 1;
+                this.height = 3;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.Horizontal2:
+                this.width = 2;
+                this.height = 1;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.Horizontal3:
+                this.width = 3;
+                this.height = 1;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.LongBL:
+                this.width = 2;
+                this.height = 3;
+                this.heightStartX = 0;
+                this.heightStartY = -2;
+                break;
+            case ShapeType.LongTL:
+                this.width = 3;
+                this.height = 2;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.LongTR:
+                this.width = 2;
+                this.height = 3;
+                this.heightStartX = 1;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.LongBR:
+                this.width = 3;
+                this.height = 2;
+                this.heightStartX = 2;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.ShortTL:
+                this.width = 2;
+                this.height = 2;
+                this.heightStartX = 0;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.ShortTR:
+                this.width = 2;
+                this.height = 2;
+                this.heightStartX = 1;
+                this.heightStartY = 0;
+                break;
+            case ShapeType.ShortBR:
+                this.width = 2;
+                this.height = 2;
+                this.heightStartX = 1;
+                this.heightStartY = -1;
+                break;
+            case ShapeType.ShortBL:
+                this.width = 2;
+                this.height = 2;
+                this.heightStartX = 0;
+                this.heightStartY = -1;
+                break;
+        }
         startingXPos = 0;
         startingYPos = 0;
         didInsert = false;
     }
 
     // Inserts the symbol in a random place in shape
-    public void InsertSymbol(GameObject[,] finishedPuzzle)
+    public void InsertSymbol(GameObject[,] finishedPuzzle, bool isTutorial)
     {
         if (didInsert)
         {
-            // Gets a random x position to insert symbol
-            xSymbol = Random.Range(startingXPos, startingXPos + width);
-            ySymbol = startingYPos;
-
-            // If the x position is where the vertical part starts, get a random y pos
-            if (xSymbol == startingXPos + heightStartX)
+            if (!isTutorial)
             {
-                ySymbol = Random.Range(startingYPos + heightStartY, startingYPos + heightStartY + height);
+                // Gets a random x position to insert symbol
+                xSymbol = Random.Range(startingXPos, startingXPos + width);
+                ySymbol = startingYPos;
+
+                // If the x position is where the vertical part starts, get a random y pos
+                if (xSymbol == startingXPos + heightStartX)
+                {
+                    ySymbol = Random.Range(startingYPos + heightStartY, startingYPos + heightStartY + height);
+                }
+            }
+            else
+            {
+                xSymbol = startingXPos;
+                ySymbol = startingYPos;
             }
 
             // Changes the tile type to symbol

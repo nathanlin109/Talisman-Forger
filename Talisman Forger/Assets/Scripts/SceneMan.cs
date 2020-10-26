@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState { MainMenu, Game, Pause, Win}
 
 public class SceneMan : MonoBehaviour
 {
     // Fields
+    public GameObject tileSpawner;
     public List<Shape> addedShapes;
     public GameObject[,] puzzle;
     public GameObject[,] finishedPuzzle;
@@ -16,19 +18,29 @@ public class SceneMan : MonoBehaviour
     public GameObject UICanvas;
     public GameObject pauseCanvas;
     public GameObject instructionsCanvas;
+    public GameObject StartingInstructionsCanvas;
+    public GameObject BackgroundCanvas;
+    public GameObject WelcomeCanvas;
     public bool paused;
     private bool playedParticles;
     private float particleTime;
     public int puzzleSize;
+    public bool isTutorial;
 
     // Start is called before the first frame update
     void Start()
     {
         didWin = false;
-        paused = false;
         playedParticles = false;
         particleTime = 0;
-        puzzleSize = GameObject.Find("TileSpawner").GetComponent<TileSpawner>().puzzleSize;
+        if (!isTutorial)
+        {
+            puzzleSize = tileSpawner.GetComponent<TileSpawner>().puzzleSize;
+        }
+        else
+        {
+            puzzleSize = 7;
+        }
     }
 
     // Update is called once per frame
@@ -57,7 +69,56 @@ public class SceneMan : MonoBehaviour
                 particleTime += Time.deltaTime;
                 if (particleTime >= puzzle[0, 0].GetComponentInChildren<ParticleSystem>().main.duration + .5f)
                 {
-                    SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+                    if (!isTutorial)
+                    {
+                        SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+                    }
+                    else
+                    {
+                        // Destroys all previous tiles
+                        for (int i = 0; i < puzzleSize; i++)
+                        {
+                            for (int x = 0; x < puzzleSize; x++)
+                            {
+                                Destroy(puzzle[i, x]);
+                                Destroy(finishedPuzzle[i, x]);
+                            }
+                        }
+
+                        // Create new ppuzzle
+                        tileSpawner.GetComponent<TileSpawner>().tutorialLevel++;
+                        if (tileSpawner.GetComponent<TileSpawner>().tutorialLevel < 3)
+                        {
+                            tileSpawner.GetComponent<TileSpawner>().Init();
+                        }
+                        didWin = false;
+
+                        // Sets appropriate UI
+                        WelcomeCanvas.SetActive(true);
+                        if (tileSpawner.GetComponent<TileSpawner>().tutorialLevel == 2)
+                        {
+                            GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
+                                "Congratulations!";
+                            GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
+                                "You Completed your first puzzle! Not let's try something a little bit harder. Try completing " +
+                                "this next puzzle from the beginning.";
+                        }
+                        else if (tileSpawner.GetComponent<TileSpawner>().tutorialLevel == 3)
+                        {
+                            GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
+                                "You Have Completed the Tutorial!";
+                            GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
+                                "Enjoy your journey creating the finest talismans in Ethshar!";
+                            GameObject.Find("Welcome Canvas/OkButton/Text").GetComponent<Text>().text =
+                                "Return to Menu";
+                            GameObject.Find("Welcome Canvas/OkButton").GetComponent<RectTransform>().sizeDelta = new Vector2(500, 75);
+                        }
+                        UICanvas.SetActive(false);
+                        paused = true;
+                    }
+
+                    playedParticles = false;
+                    particleTime = 0;
                 }
             }
         }
