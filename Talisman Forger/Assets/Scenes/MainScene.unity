@@ -1276,6 +1276,7 @@ MonoBehaviour:
   sceneMan: {fileID: 1552224924}
   tile: {fileID: 3617177964029863295, guid: b7cf1a9d836d28a429f0dd93ce2bbe08, type: 3}
   inserted: 0
+  puzzleSize: 0
   whiteMat: {fileID: 2100000, guid: 7f7be984692417744b9dfa8128d83040, type: 2}
   blackMat: {fileID: 2100000, guid: 9c2e5fc6e289d4e4d9d10d14cd63f11d, type: 2}
   blackBorderMat: {fileID: 2100000, guid: ac49d44eba14c484699c834d83ee8b5a, type: 2}
@@ -1300,6 +1301,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 3a8f82568b9092b4bbf19894ad9eae2a, type: 2}
   - {fileID: 2100000, guid: 7fa23efa4be6fb84b89d1251e538b8c0, type: 2}
   symbolCopies: 3
+  levelInfo: {fileID: 0}
+  mainCamera: {fileID: 0}
 --- !u!4 &906031351
 Transform:
   m_ObjectHideFlags: 0
@@ -1982,6 +1985,7 @@ MonoBehaviour:
   pauseCanvas: {fileID: 362160610}
   instructionsCanvas: {fileID: 194443869}
   paused: 0
+  puzzleSize: 0
 --- !u!4 &1552224926
 Transform:
   m_ObjectHideFlags: 0
