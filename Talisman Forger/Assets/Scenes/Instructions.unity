@@ -1894,7 +1894,9 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Your first puzzle is almost complete! All you need to do to finish your
-    very first puzzle is to flip one tile to complete the "cross" shape. Good luck!
+    very first puzzle is to flip one tile to complete the "cross" shape. Every puzzle
+    you encounter contains the recipe and ingredients for forging and enchanting
+    your very own talismans. Good luck!
 --- !u!222 &1069507579
 CanvasRenderer:
   m_ObjectHideFlags: 0

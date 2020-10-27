@@ -100,7 +100,7 @@ public class SceneMan : MonoBehaviour
                             GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
                                 "Congratulations!";
                             GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
-                                "You Completed your first puzzle! Not let's try something a little bit harder. Try completing " +
+                                "You Completed your first puzzle and forged your first talisman! Not let's try something a little bit harder. Try completing " +
                                 "this next puzzle from the beginning.";
                         }
                         else if (tileSpawner.GetComponent<TileSpawner>().tutorialLevel == 3)
@@ -108,7 +108,7 @@ public class SceneMan : MonoBehaviour
                             GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
                                 "You Have Completed the Tutorial!";
                             GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
-                                "Enjoy your journey creating the finest talismans in Ethshar!";
+                                "Enjoy your journey completing puzzles and creating the finest talismans in Ethshar!";
                             GameObject.Find("Welcome Canvas/OkButton/Text").GetComponent<Text>().text =
                                 "Return to Menu";
                             GameObject.Find("Welcome Canvas/OkButton").GetComponent<RectTransform>().sizeDelta = new Vector2(500, 75);
