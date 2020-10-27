@@ -2392,23 +2392,23 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: '- White sections must contain only 1 symbol each.
+  m_Text: '- Use the left mouse button to click on tiles to flip them and change
+    them between white and black tiles.
 
-    - White sections
-    are isolated from each other by black tiles horizontally, vertically, and diagonally.
+    - Flip tiles on the board to create
+    shapes consisting of white tiles that match the symbols present on the board.
 
     -
-    White sections must be in the shape of the symbol that they contain.
+    White shapes must contain only 1 symbol each.
 
-    - Black
-    tiles must form a continuous chain, except in the corners of the board where
-    they can be separated.
+    - White shapes may not border
+    other white shapes horizontally, vertically, and diagonally (white tiles may
+    not be adjacent to each other and must have at least one black tile between one
+    white tile and another).
 
-    - When the board consists of white sections that
+    - When the board consists of white shapes that
     match the shapes of the all symbols on the board, the player wins that puzzle
-    and moves on to the next puzzle.
-
-'
+    and moves on to the next puzzle.'
 --- !u!222 &2069457143
 CanvasRenderer:
   m_ObjectHideFlags: 0
