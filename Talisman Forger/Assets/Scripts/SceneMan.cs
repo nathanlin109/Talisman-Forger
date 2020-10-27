@@ -136,6 +136,8 @@ public class SceneMan : MonoBehaviour
     public void UnPause()
     {
         PlayClickSound();
+        GameObject.Find("Pause Canvas/ResumeButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("Pause Canvas/ResumeButton").GetComponent<Image>().sprite = GameObject.Find("Pause Canvas/ResumeButton").GetComponent<ButtonHover>().buttonSprites[0];
         UICanvas.SetActive(true);
         pauseCanvas.SetActive(false);
         paused = false;

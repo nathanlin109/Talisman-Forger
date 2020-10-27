@@ -802,7 +802,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 36108d509212f114ab7547c972a258a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 414776b88c2167f4ea05d68ac9c2609e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -833,8 +833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSprites:
-  - {fileID: 21300000, guid: 36108d509212f114ab7547c972a258a3, type: 3}
-  - {fileID: 21300000, guid: 3167eb688e4ca27418c5d4aad2d6106d, type: 3}
+  - {fileID: 21300000, guid: 414776b88c2167f4ea05d68ac9c2609e, type: 3}
+  - {fileID: 21300000, guid: 7a057940940dcbc469534c7b07636a4a, type: 3}
   spriteIndex: 0
 --- !u!1 &1642365949
 GameObject:
