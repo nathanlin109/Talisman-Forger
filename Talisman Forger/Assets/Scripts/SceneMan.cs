@@ -108,7 +108,7 @@ public class SceneMan : MonoBehaviour
                             GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
                                 "You Have Completed the Tutorial!";
                             GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
-                                "Enjoy your journey completing puzzles and creating the finest talismans in Ethshar!";
+                                "Enjoy your journey in taking exams to complete puzzles and create the finest talismans in Ethshar!";
                             GameObject.Find("Welcome Canvas/OkButton/Text").GetComponent<Text>().text =
                                 "Return to Menu";
                         }
@@ -126,6 +126,8 @@ public class SceneMan : MonoBehaviour
     public void Pause()
     {
         PlayClickSound();
+        GameObject.Find("UI Canvas/MenuButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("UI Canvas/MenuButton").GetComponent<Image>().sprite = GameObject.Find("UI Canvas/MenuButton").GetComponent<ButtonHover>().buttonSprites[0];
         UICanvas.SetActive(false);
         pauseCanvas.SetActive(true);
         paused = true;
@@ -157,6 +159,8 @@ public class SceneMan : MonoBehaviour
     public void CloseInstructions()
     {
         PlayClickSound();
+        GameObject.Find("Instructions Canvas/CloseButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("Instructions Canvas/CloseButton").GetComponent<Image>().sprite = GameObject.Find("Instructions Canvas/CloseButton").GetComponent<ButtonHover>().buttonSprites[0];
         pauseCanvas.SetActive(true);
         instructionsCanvas.SetActive(false);
     }

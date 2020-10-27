@@ -103,9 +103,19 @@ public class StartSceneManager : MonoBehaviour
     public void CloseCreditsLore()
     {
         PlayClickSound();
+        if (creditsCanvas.activeSelf)
+        {
+            GameObject.Find("CreditsCanvas/Button").GetComponent<ButtonHover>().spriteIndex = 0;
+            GameObject.Find("CreditsCanvas/Button").GetComponent<Image>().sprite = GameObject.Find("CreditsCanvas/Button").GetComponent<ButtonHover>().buttonSprites[0];
+            creditsCanvas.SetActive(false);
+        }
+        else if (loreCanvas.activeSelf)
+        {
+            GameObject.Find("LoreCanvas/Button").GetComponent<ButtonHover>().spriteIndex = 0;
+            GameObject.Find("LoreCanvas/Button").GetComponent<Image>().sprite = GameObject.Find("LoreCanvas/Button").GetComponent<ButtonHover>().buttonSprites[0];
+            loreCanvas.SetActive(false);
+        }
         mainCanvas.SetActive(true);
-        creditsCanvas.SetActive(false);
-        loreCanvas.SetActive(false);
     }
 
     private void PlayClickSound()
