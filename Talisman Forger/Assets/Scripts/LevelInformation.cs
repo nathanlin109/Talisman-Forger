@@ -96,6 +96,7 @@ public class LevelInformation : MonoBehaviour
         {
             timerText = GameObject.Find("Canvas/FinalTimeText").GetComponent<Text>();
             timerText.text = "You completed level " + level + " with a time of " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
+            level++;
         }
     }
 }
