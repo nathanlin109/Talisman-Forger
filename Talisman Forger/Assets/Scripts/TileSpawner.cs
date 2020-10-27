@@ -38,6 +38,11 @@ public class TileSpawner : MonoBehaviour
         levelInfo = GameObject.Find("LevelInformation").GetComponent<LevelInformation>();
         puzzleSize = 7 + levelInfo.level / 5;   // only change this 7 when changing the initial size of the puzzle grid
 
+        if (isTutorial)
+        {
+            puzzleSize = 7;
+        }
+
         if (puzzleSize > 15)
         {
             puzzleSize = 15;
@@ -261,7 +266,7 @@ public class TileSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     // Generates tiles
