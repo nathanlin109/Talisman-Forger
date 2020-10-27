@@ -111,7 +111,6 @@ public class SceneMan : MonoBehaviour
                                 "Enjoy your journey completing puzzles and creating the finest talismans in Ethshar!";
                             GameObject.Find("Welcome Canvas/OkButton/Text").GetComponent<Text>().text =
                                 "Return to Menu";
-                            GameObject.Find("Welcome Canvas/OkButton").GetComponent<RectTransform>().sizeDelta = new Vector2(500, 75);
                         }
                         UICanvas.SetActive(false);
                         paused = true;
@@ -149,6 +148,8 @@ public class SceneMan : MonoBehaviour
     public void OpenInstructions()
     {
         PlayClickSound();
+        GameObject.Find("Pause Canvas/InstructionsButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("Pause Canvas/InstructionsButton").GetComponent<Image>().sprite = GameObject.Find("Pause Canvas/InstructionsButton").GetComponent<ButtonHover>().buttonSprites[0];
         pauseCanvas.SetActive(false);
         instructionsCanvas.SetActive(true);
     }

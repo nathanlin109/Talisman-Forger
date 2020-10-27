@@ -520,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &719844093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -831,6 +831,7 @@ MonoBehaviour:
   buttonSprites:
   - {fileID: 21300000, guid: 36108d509212f114ab7547c972a258a3, type: 3}
   - {fileID: 21300000, guid: 3167eb688e4ca27418c5d4aad2d6106d, type: 3}
+  spriteIndex: 0
 --- !u!1 &1010756033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,8 +1233,9 @@ GameObject:
   - component: {fileID: 1271373694}
   - component: {fileID: 1271373693}
   - component: {fileID: 1271373692}
+  - component: {fileID: 1271373691}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1259,6 +1261,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1271373691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271373689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5715c80b8ba835d459ea78fb07640db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSprites:
+  - {fileID: 21300000, guid: b62cbbc6ccd738c47b99322dccd85e31, type: 3}
+  - {fileID: 21300000, guid: ca1faa16300525742b0bf16d29cb0ec5, type: 3}
+  spriteIndex: 0
 --- !u!114 &1271373692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,7 +1352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b62cbbc6ccd738c47b99322dccd85e31, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1755,6 +1773,7 @@ MonoBehaviour:
   buttonSprites:
   - {fileID: 21300000, guid: 5e4cf35f1e5980344a20c72fac15614f, type: 3}
   - {fileID: 21300000, guid: 2366266885351e643a8262611b76b469, type: 3}
+  spriteIndex: 0
 --- !u!1 &1610974243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,6 +2091,7 @@ MonoBehaviour:
   buttonSprites:
   - {fileID: 21300000, guid: bcfe51c85e032c44a8731883b89dd98b, type: 3}
   - {fileID: 21300000, guid: 5080499e471d74043a8a2e7982e7b40d, type: 3}
+  spriteIndex: 0
 --- !u!114 &1909032654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2182,7 +2202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1911083817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2488,8 +2508,9 @@ GameObject:
   - component: {fileID: 2043564525}
   - component: {fileID: 2043564524}
   - component: {fileID: 2043564523}
+  - component: {fileID: 2043564522}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LoreButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2515,6 +2536,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2043564522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043564520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5715c80b8ba835d459ea78fb07640db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSprites:
+  - {fileID: 21300000, guid: 8393322858b1a484196d691637051542, type: 3}
+  - {fileID: 21300000, guid: 6ff0dbb71775aa842bd697ef51c5c7e9, type: 3}
+  spriteIndex: 0
 --- !u!114 &2043564523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2590,7 +2627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8393322858b1a484196d691637051542, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

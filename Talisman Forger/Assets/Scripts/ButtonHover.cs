@@ -9,7 +9,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Fields
     // First sprite is normal, second is hover
     public Sprite[] buttonSprites;
-    private int spriteIndex;
+    public int spriteIndex;
 
     // Start is called before the first frame update
     void Start()

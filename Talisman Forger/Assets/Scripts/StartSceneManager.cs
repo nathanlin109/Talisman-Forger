@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class StartSceneManager : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class StartSceneManager : MonoBehaviour
     public GameObject loreCanvas;
     public GameObject creditsCanvas;
     public LevelInformation levelInformation;
+    public Sprite menuButtonNorm;
+    public Sprite menuButtonHover;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +60,16 @@ public class StartSceneManager : MonoBehaviour
         if (GameObject.Find("SceneMan").GetComponent<SceneMan>().tileSpawner.GetComponent<TileSpawner>().
             tutorialLevel < 3)
         {
+            GameObject.Find("Welcome Canvas/OkButton").GetComponent<ButtonHover>().spriteIndex = 0;
+            GameObject.Find("Welcome Canvas/OkButton").GetComponent<Image>().sprite = GameObject.Find("Welcome Canvas/OkButton").GetComponent<ButtonHover>().buttonSprites[0];
+
+            if (GameObject.Find("SceneMan").GetComponent<SceneMan>().tileSpawner.GetComponent<TileSpawner>().tutorialLevel == 2)
+            {
+                GameObject.Find("Welcome Canvas/OkButton").GetComponent<Image>().sprite = menuButtonNorm;
+                GameObject.Find("Welcome Canvas/OkButton").GetComponent<ButtonHover>().buttonSprites[0] = menuButtonNorm;
+                GameObject.Find("Welcome Canvas/OkButton").GetComponent<ButtonHover>().buttonSprites[1] = menuButtonHover;
+            }
+
             GameObject.Find("SceneMan").GetComponent<SceneMan>().WelcomeCanvas.SetActive(false);
             GameObject.Find("SceneMan").GetComponent<SceneMan>().UICanvas.SetActive(true);
             GameObject.Find("SceneMan").GetComponent<SceneMan>().paused = false;
@@ -73,6 +85,8 @@ public class StartSceneManager : MonoBehaviour
     public void RunLore()
     {
         PlayClickSound();
+        GameObject.Find("Canvas/LoreButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("Canvas/LoreButton").GetComponent<Image>().sprite = GameObject.Find("Canvas/LoreButton").GetComponent<ButtonHover>().buttonSprites[0];
         mainCanvas.SetActive(false);
         loreCanvas.SetActive(true);
     }
@@ -80,6 +94,8 @@ public class StartSceneManager : MonoBehaviour
     public void RunCredits()
     {
         PlayClickSound();
+        GameObject.Find("Canvas/CreditsButton").GetComponent<ButtonHover>().spriteIndex = 0;
+        GameObject.Find("Canvas/CreditsButton").GetComponent<Image>().sprite = GameObject.Find("Canvas/CreditsButton").GetComponent<ButtonHover>().buttonSprites[0];
         mainCanvas.SetActive(false);
         creditsCanvas.SetActive(true);
     }
