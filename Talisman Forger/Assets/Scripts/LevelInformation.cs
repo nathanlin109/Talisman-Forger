@@ -78,7 +78,7 @@ public class LevelInformation : MonoBehaviour
     {
         timePassed = 0;
         timerText.text = "Time: " + Math.Truncate(timePassed / 60).ToString("00") + ":" + Math.Truncate(timePassed % 60).ToString("00");
-        levelText.text = "Level: " + level;
+        levelText.text = "Tutorial";
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

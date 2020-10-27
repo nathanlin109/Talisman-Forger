@@ -1990,7 +1990,7 @@ MonoBehaviour:
   timerText: {fileID: 1589730015}
   levelText: {fileID: 949681756}
   timePassed: 0
-  level: 0
+  level: 1
 --- !u!4 &1593631190
 Transform:
   m_ObjectHideFlags: 0

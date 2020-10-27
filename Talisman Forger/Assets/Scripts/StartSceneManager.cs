@@ -13,7 +13,10 @@ public class StartSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Instructions")
+        {
+            levelInformation = GameObject.Find("LevelInformation").GetComponent<LevelInformation>();
+        }
     }
 
     // Update is called once per frame

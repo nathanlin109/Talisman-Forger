@@ -261,7 +261,7 @@ public class TileSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     // Generates tiles
