@@ -2501,14 +2501,16 @@ MonoBehaviour:
 
 
     - White shapes may not border
-    other white shapes horizontally, vertically, and diagonally (white tiles may
-    not be adjacent to each other and must have at least one black tile between one
-    white tile and another).
+    other white shapes
+
+    horizontally, vertically, and diagonally (white tiles
+    from different shapes may not be adjacent to each other and shapes must have
+    at least one black tile between each other).
 
 
-    - When the board consists of white shapes that
-    match the shapes of the all symbols on the board, the player wins that puzzle
-    and moves on to the next puzzle.'
+    - When the board consists
+    of white shapes that match the shapes of the all symbols on the board, the player
+    wins that puzzle and moves on to the next puzzle.'
 --- !u!222 &2069457143
 CanvasRenderer:
   m_ObjectHideFlags: 0

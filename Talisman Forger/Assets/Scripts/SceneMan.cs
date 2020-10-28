@@ -108,7 +108,7 @@ public class SceneMan : MonoBehaviour
                             GameObject.Find("Welcome Canvas/WelcomeTextTitle").GetComponent<Text>().text =
                                 "You Have Completed the Tutorial!";
                             GameObject.Find("Welcome Canvas/WelcomeTextBody").GetComponent<Text>().text =
-                                "Enjoy your journey in taking exams to complete puzzles and create the finest talismans in Ethshar!";
+                                "Good luck with your sorcery exams and enjoy your journey in completing puzzles and creating some of the finest talismans in Ethshar!";
                             GameObject.Find("Welcome Canvas/OkButton/Text").GetComponent<Text>().text =
                                 "Return to Menu";
                         }
