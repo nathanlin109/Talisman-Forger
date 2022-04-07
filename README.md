@@ -1,2 +1,2 @@
 # Talisman Forger
- GDD2 Game
+ A top down 3D survival horror game.
